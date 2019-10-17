@@ -1,5 +1,5 @@
 from ogame import OGame
-from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense
+from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math
 
 
@@ -21,6 +21,7 @@ while 1:
     print(global_res)
     print(ogame.get_resources_buildings(34374636))
 
+    ogame.build(id,Facilities['RoboticsFactory'])
     if(global_res['energy'] < 0):
         if isPayable(75, 15, 0, int(res_build['solar_plant']), 1.5,global_res) == True:
             ogame.build(id, Buildings['SolarPlant'])
@@ -28,7 +29,15 @@ while 1:
     elif int(res_build['metal_mine']) < int(res_build['crystal_mine']) + 4:
     #elif int(res_build['metal_mine']) < (int(res_build['metal_mine']) + 4) and isPayable(60, 15, 0, int(res_build['metal_mine']), 1.5,global_res) == True:
         ogame.build(id, Buildings['MetalMine'])
-        print("buildings...")
-    elif
+        ogame.build(id,Buildings['MetalStorage'])
+        print("buildings metal mine...")
+    elif int(res_build['crystal_mine']) < int(res_build['deuterium_synthesizer']) + 4:
+        ogame.build(id, Buildings['CrystalMine'])
+        ogame.build(id,Buildings['CrystalStorage'])
+    else:
+        ogame.build(id, Buildings['DeuteriumSynthesizer'])
+        ogame.build(id, Buildings['DeuteriumTank'])
 
     time.sleep(1)
+
+
