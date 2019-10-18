@@ -19,11 +19,14 @@ while 1:
     res_build = ogame.get_resources_buildings(34374636)
     lvl_rerearchs = ogame.get_research()
     lvl_facilities = ogame.get_facilities(id)
+    #galaxy_infos = ogame.galaxy_infos(1,30)
     print(global_res)
-    print(ogame.get_resources_buildings(34374636))
-    print(lvl_facilities)
+   # print(ogame.get_resources_buildings(34374636))
+    #print(lvl_facilities)
     print(lvl_rerearchs)
+    #print(galaxy_infos)
 
+    ogame.build(id, Research['Astrophysics'])
     ogame.build(id,Facilities['RoboticsFactory'])
     if(global_res['energy'] < 0):
         if isPayable(75, 15, 0, int(res_build['solar_plant']), 1.5,global_res) == True:
@@ -43,7 +46,8 @@ while 1:
     if(int(lvl_facilities['research_lab']) < 4):
         ogame.build(id,Facilities['ResearchLab'])
 
-    ogame.build(id, Research['Astrophysics'])
+
+    ogame.build(id,Research['ArmourTechnology'])
 
     if(int(lvl_rerearchs['energy_technology']) < 2):
         ogame.build(id,Research['EnergyTechnology'])
@@ -54,4 +58,4 @@ while 1:
 
     time.sleep(1)
 
-
+ #1:31
