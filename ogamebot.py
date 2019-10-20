@@ -2,6 +2,7 @@ from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math
 import function_ogame
+from flask import Flask
 
 print("welcome to ogamebot!!")
 
@@ -21,4 +22,13 @@ def global_launch():
     except:
         global_launch()
 
-global_launch()
+#global_launch()
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello():
+    return global_launch()
+
+if __name__ == '__main__':
+    app.run()

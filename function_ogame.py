@@ -2,6 +2,7 @@ from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math
 
+
 def launch(ogame,id):
     global_res = ogame.get_resources(id)
     res_build = ogame.get_resources_buildings(id)
