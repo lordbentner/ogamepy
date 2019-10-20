@@ -2,7 +2,7 @@ from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math
 import function_ogame
-from flask import Flask
+
 
 print("welcome to ogamebot!!")
 
