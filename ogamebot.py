@@ -23,7 +23,7 @@ class Afficheur(Thread):
         self.global_launch()
 
     def global_launch(self):
-        #try:
+        try:
             ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
             id_pl = ogame.get_planet_ids()
             print(id_pl)
@@ -37,8 +37,5 @@ class Afficheur(Thread):
                 time.sleep(1)
                 if i >= len(id_pl):
                     i = 0
-        #except:
-        #    global_launch()
-
-#thread_1.join()
-#global_launch()
+        except:
+            global_launch()
