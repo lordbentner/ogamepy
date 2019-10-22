@@ -15,23 +15,20 @@ class Afficheur(Thread):
     ogame_infos = []
     isRunning = True
 
-    def __init__(self, lettre):
+    def __init__(self):
         Thread.__init__(self)
-        self.lettre = lettre
+
+    def join(self):
+        self.isRunning = False
+        Thread.join(self)
 
     def run(self):
         """Code à exécuter pendant l'exécution du thread."""
-        self.global_launch()
-
-    def StopRunning(self):
-        self.isRunning = False
-
-    def global_launch(self):
         ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
         id_pl = ogame.get_planet_ids()
         print(id_pl)
         i = 0
-        while self.isRunning:
+        while 1:
             id = id_pl[i]
             print(id)
             ogame_infos = function_ogame.launch(ogame,id)
@@ -40,3 +37,8 @@ class Afficheur(Thread):
             time.sleep(1)
             if i >= len(id_pl):
                 i = 0
+            if self.isRunning == False:
+                break;
+
+    def StopRunning(self):
+        self.isRunning = False
