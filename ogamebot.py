@@ -19,7 +19,6 @@ class Afficheur(Thread):
         Thread.__init__(self)
 
     def join(self):
-        self.isRunning = False
         Thread.join(self)
 
     def run(self):
