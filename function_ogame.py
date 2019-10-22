@@ -9,7 +9,8 @@ def launch(ogame,id):
     lvl_rerearchs = ogame.get_research()
     lvl_facilities = ogame.get_facilities(id)
     ogame.build(id, Research['Astrophysics'])
-    ogame.build(id,Facilities['RoboticsFactory'])
+    if(int(lvl_facilities['robotics_factory']) < 10):
+        ogame.build(id,Facilities['RoboticsFactory'])
     if(global_res['energy'] < 0):
         ogame.build(id, Buildings['SolarPlant'])
     elif int(res_build['metal_mine']) < int(res_build['crystal_mine']) + 4:
