@@ -16,7 +16,6 @@ def launch_ogame():
     try:
         thread_1 = Afficheur()
         thread_1.start()
-        thread_1.join()
     except:
         launch_ogame()
 
@@ -26,6 +25,7 @@ def hello():
 
 @app.route("/start/", methods=['POST'])
 def start():
+    thread_1 = Afficheur()
     thread_1.start()
     return render_template('index.html')
 
