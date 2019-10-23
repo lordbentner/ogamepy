@@ -12,11 +12,10 @@ class Afficheur(Thread):
     
     """Thread chargé simplement d'afficher une lettre dans la console."""
 
-    ogame_infos = []
-    isRunning = True
-
     def __init__(self):
         Thread.__init__(self)
+        self.isRunning = True
+        self.ogame_infos = []
 
     def join(self):
         Thread.join(self)
@@ -27,17 +26,15 @@ class Afficheur(Thread):
         id_pl = ogame.get_planet_ids()
         print(id_pl)
         i = 0
-        while 1:
+        while self.isRunning:
             id = id_pl[i]
             print(id)
-            ogame_infos = function_ogame.launch(ogame,id)
-            print(ogame_infos)
+            self.ogame_infos = function_ogame.launch(ogame,id)
+            print(self.ogame_infos)
             i = i + 1
             time.sleep(1)
             if i >= len(id_pl):
                 i = 0
-            if self.isRunning == False:
-                break;
 
     def StopRunning(self):
         self.isRunning = False

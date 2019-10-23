@@ -2,12 +2,12 @@ from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math
 
-
 def launch(ogame,id):
     global_res = ogame.get_resources(id)
     res_build = ogame.get_resources_buildings(id)
     lvl_rerearchs = ogame.get_research()
     lvl_facilities = ogame.get_facilities(id)
+    planet_infos = ogame.get_planet_infos(id)
     ogame.build(id, Research['Astrophysics'])
     if(int(lvl_facilities['robotics_factory']) < 10):
         ogame.build(id,Facilities['RoboticsFactory'])

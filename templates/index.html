@@ -16,7 +16,10 @@
     <button name="forwardBtn" type="submit">Refresh</button>
 </form>
     {% for x in ogame %}
-    <li>x</li>
+    <ul>{{x}}</ul>
+        {% for y in x %}
+           {{ y }}
+        {% endfor %}    
     {% endfor %}
 </body>
 </html>
