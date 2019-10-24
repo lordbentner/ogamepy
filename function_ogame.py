@@ -4,7 +4,6 @@ import time , math
 
 def satProduction(ogame,id,lvl_centrale,energy):
     planet_infos = ogame.get_planet_infos(id)
-    print(planet_infos)
     tmax = planet_infos['temperature']['max']
     tmin = planet_infos['temperature']['min']
     prodsat = (tmax/4) + 20
@@ -29,7 +28,7 @@ def launch(ogame,id):
         ogame.build(id,Facilities['RoboticsFactory'])
     if(global_res['energy'] < 0):
         ogame.build(id, Buildings['SolarPlant'])
-        satProduction(ogame,id,res_build['solar_plant'],global_res['energy'])          
+        #satProduction(ogame,id,res_build['solar_plant'],global_res['energy'])          
     elif int(res_build['metal_mine']) < int(res_build['crystal_mine']) + 4:
         ogame.build(id,Buildings['MetalStorage'])
         ogame.build(id, Buildings['MetalMine'])

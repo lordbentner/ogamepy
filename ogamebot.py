@@ -30,7 +30,7 @@ class Afficheur(Thread):
             id = id_pl[i]
             print(id)
             self.ogame_infos = function_ogame.launch(ogame,id)
-            #print(self.ogame_infos)
+            print(self.ogame_infos)
             i = i + 1
             time.sleep(1)
             if i >= len(id_pl):

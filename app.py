@@ -21,6 +21,7 @@ def launch_ogame():
 
 @app.route('/')
 def hello():
+    launch_ogame()
     return render_template('index.html')
 
 @app.route("/start/", methods=['POST'])
