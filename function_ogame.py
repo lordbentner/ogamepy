@@ -28,6 +28,7 @@ def launch(ogame,id):
     if(int(lvl_facilities['robotics_factory']) < 10):
         ogame.build(id,Facilities['RoboticsFactory'])
     if(global_res['energy'] < 0):
+        ogame.build(id, Buildings['SolarPlant'])
         satProduction(ogame,id,res_build['solar_plant'],global_res['energy'])          
     elif int(res_build['metal_mine']) < int(res_build['crystal_mine']) + 4:
         ogame.build(id,Buildings['MetalStorage'])
@@ -39,7 +40,6 @@ def launch(ogame,id):
     else:
         ogame.build(id, Buildings['DeuteriumTank'])
         ogame.build(id, Buildings['DeuteriumSynthesizer'])
-
-    print(ogame.constructions_being_built(id))    
+   
     time.sleep(1)
     return array_infos
