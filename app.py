@@ -25,8 +25,7 @@ def hello():
 
 @app.route("/start/", methods=['POST'])
 def start():
-    thread_1 = Afficheur()
-    thread_1.start()
+    launch_ogame()
     return render_template('index.html')
 
 @app.route('/refresh/', methods=['POST'])
@@ -39,6 +38,6 @@ def stop():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=PORT)
+    app.run()
 
 #host='0.0.0.0', port=PORT

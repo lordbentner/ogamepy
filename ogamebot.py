@@ -26,7 +26,7 @@ class Afficheur(Thread):
         id_pl = ogame.get_planet_ids()
         print(id_pl)
         i = 0
-        while self.isRunning:
+        while True:
             id = id_pl[i]
             print(id)
             self.ogame_infos = function_ogame.launch(ogame,id)
@@ -35,6 +35,9 @@ class Afficheur(Thread):
             time.sleep(1)
             if i >= len(id_pl):
                 i = 0
+            if self.isRunning == False:               
+                break;
+        print("end of thread!!")
 
     def StopRunning(self):
         self.isRunning = False
