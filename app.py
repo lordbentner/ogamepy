@@ -37,7 +37,7 @@ def stop():
 
 if __name__ == '__main__':
     launch_ogame()
-    app.run(use_reloader = True, debug = True)
+    app.run(host='0.0.0.0', port=PORT)
 
 #use_reloader = True,
 #host='0.0.0.0', port=PORT
