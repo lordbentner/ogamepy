@@ -13,25 +13,22 @@ app = Flask(__name__)
 thread_1 = Afficheur()
 
 def launch_ogame():
-    try:
-        thread_1 = Afficheur()
-        thread_1.start()
-    except:
-        launch_ogame()
+    global thread_1
+    thread_1.daemon = True
+    thread_1.start()
 
 @app.route('/')
 def hello():
-    launch_ogame()
-    return render_template('index.html')
-
-@app.route("/start/", methods=['POST'])
-def start():
-    launch_ogame()
-    return render_template('index.html')
+    return render_template('index.html',ogame=thread_1.ogame_infos,len=len(thread_1.ogame_infos))
 
 @app.route('/refresh/', methods=['POST'])
 def refresh():
-    return render_template('index.html', ogame=thread_1.ogame_infos)
+    return render_template('index.html',ogame=thread_1.ogame_infos,len=len(thread_1.ogame_infos))
+
+@app.route("/start/", methods=['POST'])
+def start():
+    thread_1.isRunning = True
+    return render_template('index.html')
 
 @app.route("/stop/", methods=['POST'])
 def stop():
@@ -39,6 +36,8 @@ def stop():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=PORT)
+    launch_ogame()
+    app.run(use_reloader = True, debug = True)
 
+#use_reloader = True,
 #host='0.0.0.0', port=PORT

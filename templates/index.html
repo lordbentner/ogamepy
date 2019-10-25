@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
 <title>Ogame Bot</title>
 </head>
+<div>
 <body>
     <form action="/start/" method="post">
     <button class="btn btn-primary" type="submit">Start</button>
@@ -18,14 +19,17 @@
     <form action="/refresh/" method="post">
     <button class="btn btn-info" type="submit">Refresh</button>
 </form>
+</div>
+ {% for pl_info in ogame %}
     <table>
-        {% for x in ogame %}
+        {{ pl_info["id_planet"] }}
         <tr>
-            {% for y in x %}
-            <td>{{ y }}</td>
+            {% for value in pl_info["content"] %}
+            <td>{{ value }}</td>
             {% endfor %}
         </tr>    
-        {% endfor %}
     </table>
+    <br />
+{% endfor %}
 </body>
 </html>

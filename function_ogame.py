@@ -22,7 +22,8 @@ def launch(ogame,id):
     fectch_res = ogame.get_resource_settings(id) 
     lvl_rerearchs = ogame.get_research()
     lvl_facilities = ogame.get_facilities(id)
-    array_infos = [ res_build, lvl_rerearchs, lvl_facilities ,fectch_res ]   
+    array_infos = [ res_build, lvl_rerearchs, lvl_facilities ,fectch_res ]
+    #print(ogame.fetch_resources(id))   
     ogame.build(id, Research['Astrophysics'])
     if(int(lvl_facilities['robotics_factory']) < 10):
         ogame.build(id,Facilities['RoboticsFactory'])
