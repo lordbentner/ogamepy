@@ -20,16 +20,35 @@
     <button class="btn btn-info" type="submit">Refresh</button>
 </form>
 </div>
- {% for pl_info in ogame %}
     <table>
-        {{ pl_info["id_planet"] }}
-        <tr>
-            {% for value in pl_info["content"] %}
-            <td>{{ value }}</td>
-            {% endfor %}
-        </tr>    
+        <thead><th scope="col" center>niveau des  recherches</th></thead>
+        <tbody>
+            <tr>
+                {% for key,value in research %}
+                    <td>{{key}}<center>{{value}}</center> </td>
+                {% endfor %}
+            <tr>
+        </tbody>
     </table>
-    <br />
-{% endfor %}
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Planète</th>
+            <th scope="col">lvl des ressources</th>
+            <th scope="col">lvl installations</th>
+            <th scope="col">Vaisseaux</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pl_info in ogame %}                   
+            <tr>
+                <th scope="row">{{ pl_info["id_planet"] }}</th>
+                {% for value in pl_info["content"] %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>    
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

@@ -15,14 +15,24 @@ def satProduction(ogame,id,lvl_centrale,energy):
     else:
         ogame.build(id,Buildings['SolarPlant'])
 
+def setShips(ogame,id,lvl_combustion):
+    ships = ogame.get_ships(id)
+    probe = ships['espionage_probe']
+    if(lvl_combustion < 6):
+        ogame.build(id,Research['CombustionDrive'])
+    if(probe < 6):
+        ogame.build_ships(id,Ships['EspionageProbe'],1)
+
+    if(ships['large_cargo'] < 5):
+        ogame.build_ships(id,Ships['Grandtransporteur'],1)
 
 def launch(ogame,id):
     global_res = ogame.get_resources(id)
     res_build = ogame.get_resources_buildings(id)
-    fectch_res = ogame.get_resource_settings(id) 
     lvl_rerearchs = ogame.get_research()
     lvl_facilities = ogame.get_facilities(id)
-    array_infos = [ res_build, lvl_rerearchs, lvl_facilities ,fectch_res ]
+    ships = ogame.get_ships(id)
+    array_infos = [ res_build,  lvl_facilities, ships ]
     #print(ogame.fetch_resources(id))   
     ogame.build(id, Research['Astrophysics'])
     if(int(lvl_facilities['robotics_factory']) < 10):
@@ -41,5 +51,10 @@ def launch(ogame,id):
         ogame.build(id, Buildings['DeuteriumTank'])
         ogame.build(id, Buildings['DeuteriumSynthesizer'])
    
+    if(lvl_facilities['shipyard'] < 7):
+        ogame.build(id,Facilities['Shipyard'])
+
+    setShips(ogame,id,lvl_rerearchs['combustion_drive'])
+
     time.sleep(1)
     return array_infos
