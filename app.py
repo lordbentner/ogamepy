@@ -19,11 +19,13 @@ def launch_ogame():
 
 @app.route('/')
 def hello():
-    return render_template('index.html',ogame=thread_1.ogame_infos,len=len(thread_1.ogame_infos),research=thread_1.lvl_research)
+    return render_template('index.html',ogame=thread_1.ogame_infos,
+    len=len(thread_1.ogame_infos),research=thread_1.lvl_research,isCon=thread_1.isConnected)
 
 @app.route('/refresh/', methods=['POST'])
 def refresh():
-    return render_template('index.html',ogame=thread_1.ogame_infos,len=len(thread_1.ogame_infos),research=thread_1.lvl_research)
+    return render_template('index.html',ogame=thread_1.ogame_infos,
+    len=len(thread_1.ogame_infos),research=thread_1.lvl_research,isCon=thread_1.isConnected)
 
 @app.route("/start/", methods=['POST'])
 def start():
@@ -37,7 +39,7 @@ def stop():
 
 if __name__ == '__main__':
     launch_ogame()
-    app.run(host='0.0.0.0', port=PORT,use_reloader = True)
+    app.run(use_reloader = True)
 
 #use_reloader = True,
 #host='0.0.0.0', port=PORT

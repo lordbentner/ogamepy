@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
 <title>Ogame Bot</title>
 </head>
+<h2>Etat Connection:{{isCon}}</h2>
 <div>
 <body>
     <form action="/start/" method="post">
@@ -21,11 +22,11 @@
 </form>
 </div>
     <table>
-        <thead><th scope="col" center>niveau des  recherches</th></thead>
+        <thead><tr><th scope="col center" >niveau des  recherches</th></tr></thead>
         <tbody>
             <tr>
                 {% for key,value in research %}
-                    <td>{{key}}<center>{{value}}</center> </td>
+                    <td>{{key | truncate(10)}}<center>{{value}}</center> </td>
                 {% endfor %}
             <tr>
         </tbody>

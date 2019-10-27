@@ -32,8 +32,7 @@ def launch(ogame,id):
     lvl_rerearchs = ogame.get_research()
     lvl_facilities = ogame.get_facilities(id)
     ships = ogame.get_ships(id)
-    array_infos = [ res_build,  lvl_facilities, ships ]
-    #print(ogame.fetch_resources(id))   
+    array_infos = [ res_build,  lvl_facilities, ships ]  
     ogame.build(id, Research['Astrophysics'])
     if(int(lvl_facilities['robotics_factory']) < 10):
         ogame.build(id,Facilities['RoboticsFactory'])
