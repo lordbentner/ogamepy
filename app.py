@@ -9,9 +9,10 @@ IP = os.environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1')
 PORT = int(os.environ.get('OPENSHIFT_PYTHON_PORT', 8080))
 HOME_DIR = os.environ.get('OPENSHIFT_HOMEDIR', os.getcwd())
 
-"""dir_path = os.path.dirname(os.path.realpath(__file__))
-IP
-if("opt" in dir_path):"""
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+if("opt" in dir_path):
+    IP='0.0.0.0'
 
 app = Flask(__name__)
 thread_1 = Afficheur()
