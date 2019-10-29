@@ -4,10 +4,9 @@ import time , math,function_ogame,random,sys,requests
 from threading import Thread
 from flask import Flask ,jsonify,render_template
 from bs4 import BeautifulSoup
+import requests
 
 #1:30:10 to spy
-
-
 print("welcome to ogamebot!!")
 class Afficheur(Thread):   
     """Thread chargé simplement d'afficher une lettre dans la console."""
@@ -21,34 +20,30 @@ class Afficheur(Thread):
 
     def run(self):
         """Code à exécuter pendant l'exécution du thread."""
-        ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")      
+        ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
+        self.id_pl = ogame.get_planet_ids()
+        self.ogame_infos = [""]*len(self.id_pl)      
         i = 0        
-        headers = {'X-Requested-With': 'XMLHttpRequest'}
         while True:           
             if self.isRunning:
                 try:
-                    self.id_pl = ogame.get_planet_ids()
-                    self.ogame_infos = [""]*len(self.id_pl)
-                    print(self.id_pl)
                     id = self.id_pl[i]
                     #<"index.php?page=messages&amp;tab=20&amp;ajax=1"
                     #fleetsgenericpage
                     #msg_content
-                    lin = "index.php?page=messages"
                     url = "https://s153-fr.ogame.gameforge.com/game/index.php?page=messages"
                     pl_info = ogame.get_planet_infos(id)
                     print(pl_info['planet_name'])
                     res = ogame.get_research()
                     self.lvl_research = res.items()
-                    messages = requests.get(url).content
-                    soup = BeautifulSoup(messages)
-                    #text = soup.find("div", {'id':'fleetsgenericpage'})
-                    #print(text.get_text())
-                    #print(messages)
+                    """messages = requests.get(url).content
+                    soup = BeautifulSoup(messages,'html.parser')
+                    text = soup.div
+                    print(text.get_text())
+                    print(messages)"""
                     og_info = { "id_planet":pl_info['planet_name'], "content": function_ogame.launch(ogame,id) }
                     self.ogame_infos[i] = og_info
                     self.isConnected = True
-                    #print(self.ogame_infos)
                 except RuntimeError:
                     print("RuntimeERror!!!!!!")
                     self.isConnected = False
@@ -57,9 +52,9 @@ class Afficheur(Thread):
                     print("ConnectionError!!!!!!")
                     self.isConnected = False
                     ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
-                except:
-                    print("otherError")
-                    self.isConnected = False
+                #except:
+                #    print("otherError")
+                #    self.isConnected = False
             i = i + 1            
             if i >= len(self.id_pl):
                 i = 0

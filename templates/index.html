@@ -7,20 +7,20 @@
 <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
 <title>Ogame Bot</title>
 </head>
-<h2>Etat Connection:{{isCon}}</h2>
-<div>
 <body>
-    <form action="/start/" method="post">
-    <button class="btn btn-primary" type="submit">Start</button>
-</form>
-    <form action="/stop/" method="post">
-    <button class="btn btn-primary" type="submit">Stop</button>
-</form>
-</form>
-    <form action="/refresh/" method="post">
-    <button class="btn btn-info" type="submit">Refresh</button>
-</form>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <form action="/start/" method="post">
+        <button class="btn btn-primary" type="submit">Start</button>
+    </form>
+        <form action="/stop/" method="post">
+        <button class="btn btn-danger" type="submit">Stop</button>
+    </form>
+    </form>
+        <form action="/refresh/" method="post">
+        <button class="btn btn-info" type="submit">Refresh</button>
+    </form>
+    <h2>Etat Connection:{{isCon}}</h2>
+</nav>
     <table>
         <thead><tr><th scope="col center" >niveau des  recherches</th></tr></thead>
         <tbody>
@@ -28,7 +28,7 @@
                 {% for key,value in research %}
                     <td>{{key | truncate(10)}}<center>{{value}}</center> </td>
                 {% endfor %}
-            <tr>
+            </tr>
         </tbody>
     </table>
     <table class="table">
