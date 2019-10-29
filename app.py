@@ -9,6 +9,10 @@ IP = os.environ.get('OPENSHIFT_PYTHON_IP', '127.0.0.1')
 PORT = int(os.environ.get('OPENSHIFT_PYTHON_PORT', 8080))
 HOME_DIR = os.environ.get('OPENSHIFT_HOMEDIR', os.getcwd())
 
+"""dir_path = os.path.dirname(os.path.realpath(__file__))
+IP
+if("opt" in dir_path):"""
+
 app = Flask(__name__)
 thread_1 = Afficheur()
 
@@ -39,7 +43,7 @@ def stop():
 
 if __name__ == '__main__':
     launch_ogame()
-    app.run(use_reloader = True)
+    app.run(use_reloader = True,host=IP,port=PORT)
 
 #use_reloader = True,
 #host='0.0.0.0', port=PORT
