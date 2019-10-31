@@ -34,7 +34,7 @@ def refresh():
 
 @app.route("/start/", methods=['POST'])
 def start():
-    thread_1.isRunning = True
+    thread_1.StartRunning()
     return render_template('index.html')
 
 @app.route("/stop/", methods=['POST'])

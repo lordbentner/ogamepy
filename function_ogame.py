@@ -1,6 +1,7 @@
 from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math
+from bs4 import BeautifulSoup
 
 def satProduction(ogame,id,lvl_centrale,energy):
     planet_infos = ogame.get_planet_infos(id)
@@ -25,6 +26,8 @@ def setShips(ogame,id,lvl_combustion):
 
     if(ships['large_cargo'] < 5):
         ogame.build_ships(id,Ships['Grandtransporteur'],1)
+
+    ogame.build(id,Research['ComputerTechnology'])
 
 def launch(ogame,id):
     global_res = ogame.get_resources(id)
@@ -54,6 +57,34 @@ def launch(ogame,id):
         ogame.build(id,Facilities['Shipyard'])
 
     setShips(ogame,id,lvl_rerearchs['combustion_drive'])
-
+    #transporter(ogame,id,global_res)
     time.sleep(1)
     return array_infos
+
+def getMessage(ogame):
+    messages = ogame.session.get(ogame.get_url('messages')).content
+    soup = BeautifulSoup(messages,'html.parser')
+    spanlist = soup.findAll("span")
+    i = 0
+    isflnull = False
+    isdefnull = False
+    while i<len(spanlist):
+        if "Flottes" in spanlist[i]:
+            if(spanlist[i+1].text) == "0":
+                isflnull = True
+        if "Defense" in spanlist[i]:
+            if(spanlist[i+1].text) == "0":
+                isdefnull = True
+        i=i+1
+
+def transporter(ogame,id,res,planet_mere):
+    if(res > 400000):
+        ships = [(Ships['LargeCargo'], 10)]
+        speed = Speed['100%']
+        where = {'galaxy': 1, 'system': 30, 'position': 6}
+        mission = Missions['Transport']
+        resources = { 'deuterium': res/2}
+        ogame.send_fleet(planet_mere, ships, speed, where, mission, resources)
+    print(res)
+
+#[1:30:6]
