@@ -27,8 +27,6 @@ def setShips(ogame,id,lvl_combustion):
     if(ships['large_cargo'] < 5):
         ogame.build_ships(id,Ships['Grandtransporteur'],1)
 
-    ogame.build(id,Research['ComputerTechnology'])
-
 def launch(ogame,id):
     global_res = ogame.get_resources(id)
     res_build = ogame.get_resources_buildings(id)
@@ -39,6 +37,12 @@ def launch(ogame,id):
     ogame.build(id, Research['Astrophysics'])
     if(int(lvl_facilities['robotics_factory']) < 10):
         ogame.build(id,Facilities['RoboticsFactory'])
+    else:
+        ogame.build(id,Facilities['NaniteFactory'])
+        ogame.build(id,Facilities['Terraformer'])
+        if(lvl_facilities['missile_silo'] <4):
+            ogame.build(id,Facilities['MissileSilo'])
+            ogame.build_defense(id,Defense['AntiBallisticMissiles'],1)
     if(global_res['energy'] < 0):
         ogame.build(id, Buildings['SolarPlant'])
         #satProduction(ogame,id,res_build['solar_plant'],global_res['energy'])          
@@ -57,7 +61,6 @@ def launch(ogame,id):
         ogame.build(id,Facilities['Shipyard'])
 
     setShips(ogame,id,lvl_rerearchs['combustion_drive'])
-    #transporter(ogame,id,global_res)
     time.sleep(1)
     return array_infos
 
