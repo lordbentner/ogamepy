@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 import requests
 
 #1:30:10 to spy
-print("welcome to ogamebot!!")
 class Afficheur(Thread):   
     """Thread chargé simplement d'afficher une lettre dans la console."""
     def __init__(self):
@@ -28,15 +27,14 @@ class Afficheur(Thread):
                     id = self.id_pl[i]
                     pl_info = self.ogame.get_planet_infos(id)                  
                     print(pl_info['planet_name'])
-                    res = self.ogame.get_research()
-                    self.lvl_research = res.items()
                     og_info = { "id_planet":pl_info['planet_name'], "content": function_ogame.launch(self.ogame,id) }
                     self.ogame_infos[i] = og_info
                     self.isConnected = True
                     global_res = self.ogame.get_resources(id)
                     if i!=0:
                         function_ogame.transporter(self.ogame,id,global_res['deuterium'],self.id_pl[0])
-                        self.ogame.build(id,Research['EnergyTechnology'])
+                    else:
+                        self.lvl_research = function_ogame.setResearch(self.ogame,id)
                 except RuntimeError:
                     print("RuntimeERror!!!!!!")
                     self.isConnected = False
@@ -44,6 +42,10 @@ class Afficheur(Thread):
                 except ConnectionError:
                     print("ConnectionError!!!!!!")
                     self.isConnected = False
+                    self.ogame.login()
+                except:
+                    self.isConnected = False
+                    self.ogame.logout()
                     self.ogame.login()
             i = i + 1            
             if i >= len(self.id_pl):

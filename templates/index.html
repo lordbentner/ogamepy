@@ -25,8 +25,13 @@
         <thead><tr><th scope="col center" >niveau des  recherches</th></tr></thead>
         <tbody>
             <tr>
-                {% for key,value in research %}
-                    <td>{{key | truncate(10)}}<center>{{value}}</center> </td>
+                {% for keyz in research[0] %}
+                    <td><center>{{keyz}}</center> </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for values in research[1] %}
+                    <td><center>{{values}}</center></td>
                 {% endfor %}
             </tr>
         </tbody>

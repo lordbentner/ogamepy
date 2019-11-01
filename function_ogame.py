@@ -19,8 +19,6 @@ def satProduction(ogame,id,lvl_centrale,energy):
 def setShips(ogame,id,lvl_combustion):
     ships = ogame.get_ships(id)
     probe = ships['espionage_probe']
-    if(lvl_combustion < 6):
-        ogame.build(id,Research['CombustionDrive'])
     if(probe < 6):
         ogame.build_ships(id,Ships['EspionageProbe'],1)
 
@@ -90,4 +88,23 @@ def transporter(ogame,id,res,planet_mere):
         ogame.send_fleet(planet_mere, ships, speed, where, mission, resources)
     print(res)
 
+def setResearch(ogame,id):
+    lvl_res = ogame.get_research()
+    ogame.build(id, Research['Astrophysics'])
+    if(lvl_res['energy_technology'] < 12):
+        ogame.build(id,Research['EnergyTechnology'])
+    if(lvl_res['combustion_drive'] < 6):
+        ogame.build(id,Research['CombustionDrive'])
+
+    res = lvl_res.items()
+    i=0
+    newkeys = []
+    newsvalues = []
+    for key,value in res:
+        newkeys.append(key.replace("_technology",""))
+        newsvalues.append(value)
+
+    return newkeys,newsvalues
+
+    
 #[1:30:6]
