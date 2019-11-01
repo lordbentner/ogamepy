@@ -36,8 +36,7 @@ class Afficheur(Thread):
                     global_res = self.ogame.get_resources(id)
                     if i!=0:
                         function_ogame.transporter(self.ogame,id,global_res['deuterium'],self.id_pl[0])
-                    #function_ogame.getMessage(self.ogame)
-                        self.ogame.build(id,Research['energy_technology'])
+                        self.ogame.build(id,Research['EnergyTechnology'])
                 except RuntimeError:
                     print("RuntimeERror!!!!!!")
                     self.isConnected = False
