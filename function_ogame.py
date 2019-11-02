@@ -25,7 +25,7 @@ def setShips(ogame,id,lvl_combustion):
     if(probe < 6):
         ogame.build_ships(id,Ships['EspionageProbe'],1)
 
-    if(ships['large_cargo'] < 5):
+    if(ships['large_cargo'] < 30):
         ogame.build_ships(id,Ships['Grandtransporteur'],1)
 
 def launch(ogame,id):
@@ -61,6 +61,7 @@ def launch(ogame,id):
         ogame.build(id,Facilities['Shipyard'])
 
     setShips(ogame,id,lvl_rerearchs['combustion_drive'])
+    setExpedition(ogame,id)
     time.sleep(1)
     return array_infos
 
@@ -95,7 +96,7 @@ def setResearch(ogame,id):
     ogame.build(id, Research['Astrophysics'])
     if(lvl_res['energy_technology'] < 12):
         ogame.build(id,Research['EnergyTechnology'])
-    if(lvl_res['combustion_drive'] < 6):
+    if(lvl_res['combustion_drive'] < 8):
         ogame.build(id,Research['CombustionDrive'])
     if(lvl_res['laser_technology'] < 10):
         ogame.build(id,Research['LaserTechnology'])
@@ -105,7 +106,22 @@ def setResearch(ogame,id):
         ogame.build(id,Research['PlasmaTechnology'])
 
     res = lvl_res.items()
-    return lvl_res
+    newkey = []
+    newvalues = []
+    for key,value in res:
+        newkey.append(key)
+        newvalues.append(value)
 
+    return newkey,newvalues
+
+def setExpedition(ogame,id):
+    pl_infos  = ogame.get_planet_infos(id)
+    coord = pl_infos['coordinate']
+    ships = [(Ships['LargeCargo'], 30)]
+    speed = Speed['100%']
+    where = {'galaxy': coord['galaxy'], 'system': coord['system'], 'position': 16}
+    mission = Missions['Expedition']
+    resources = { 'deuterium': 0}
+    ogame.send_fleet(id, ships, speed, where, mission, resources)
     
 #[1:30:6]
