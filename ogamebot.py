@@ -43,10 +43,6 @@ class Afficheur(Thread):
                     print("ConnectionError!!!!!!")
                     self.isConnected = False
                     self.ogame.login()
-                except:
-                    self.isConnected = False
-                    self.ogame.logout()
-                    self.ogame.login()
             i = i + 1            
             if i >= len(self.id_pl):
                 i = 0

@@ -21,19 +21,19 @@
     </form>
     <h2>Etat Connection:{{isCon}}</h2>
 </nav>
-    <table>
-        <thead><tr><th scope="col center" >niveau des  recherches</th></tr></thead>
+    <table class="table table-bordered">
+        <thead><tr>niveau des recherches</tr></thead>
         <tbody>
-            <tr>
+           <tr>
                 {% for keyz in research[0] %}
-                    <td><center>{{keyz}}</center> </td>
+                    <td><center>{{keyz | replace("_technology","")}}</center> </td>                   
                 {% endfor %}
             </tr>
             <tr>
                 {% for values in research[1] %}
                     <td><center>{{values}}</center></td>
                 {% endfor %}
-            </tr>
+            </tr>         
         </tbody>
     </table>
     <table class="table">

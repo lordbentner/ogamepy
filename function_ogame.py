@@ -12,8 +12,11 @@ def satProduction(ogame,id,lvl_centrale,energy):
     nbsat = energy/prodsat
     coutcen = 30*math.pow(1.5,lvl_centrale-1)
     if(nbsat*2000 < coutcen):
-        ogame.build_ships(id,Ships['SolarSatellite'],str(1))
+        print("build sat")
+        ogame.build_ships(id,Ships['SolarSatellite'],1)
+
     else:
+        print("building centrale")
         ogame.build(id,Buildings['SolarPlant'])
 
 def setShips(ogame,id,lvl_combustion):
@@ -42,12 +45,11 @@ def launch(ogame,id):
             ogame.build(id,Facilities['MissileSilo'])
             ogame.build_defense(id,Defense['AntiBallisticMissiles'],1)
     if(global_res['energy'] < 0):
-        ogame.build(id, Buildings['SolarPlant'])
-        #satProduction(ogame,id,res_build['solar_plant'],global_res['energy'])          
+        #ogame.build(id, Buildings['SolarPlant'])
+        satProduction(ogame,id,res_build['solar_plant'],global_res['energy'])          
     elif int(res_build['metal_mine']) < int(res_build['crystal_mine']) + 4:
         ogame.build(id,Buildings['MetalStorage'])
         ogame.build(id, Buildings['MetalMine'])
-        print("buildings metal mine...")
     elif int(res_build['crystal_mine']) < int(res_build['deuterium_synthesizer']) + 4:
         ogame.build(id,Buildings['CrystalStorage'])
         ogame.build(id, Buildings['CrystalMine'])
@@ -84,8 +86,8 @@ def transporter(ogame,id,res,planet_mere):
         speed = Speed['100%']
         where = {'galaxy': 1, 'system': 30, 'position': 6}
         mission = Missions['Transport']
-        resources = { 'deuterium': res/2}
-        ogame.send_fleet(planet_mere, ships, speed, where, mission, resources)
+        resources = { 'deuterium': 200000}
+        ogame.send_fleet(id, ships, speed, where, mission, resources)
     print(res)
 
 def setResearch(ogame,id):
@@ -95,16 +97,15 @@ def setResearch(ogame,id):
         ogame.build(id,Research['EnergyTechnology'])
     if(lvl_res['combustion_drive'] < 6):
         ogame.build(id,Research['CombustionDrive'])
+    if(lvl_res['laser_technology'] < 10):
+        ogame.build(id,Research['LaserTechnology'])
+    if(lvl_res['ion_technology'] < 5):
+        ogame.build(id,Research['IonTechnology'])
+    if(lvl_res['plasma_technology'] < 7):
+        ogame.build(id,Research['PlasmaTechnology'])
 
     res = lvl_res.items()
-    i=0
-    newkeys = []
-    newsvalues = []
-    for key,value in res:
-        newkeys.append(key.replace("_technology",""))
-        newsvalues.append(value)
-
-    return newkeys,newsvalues
+    return lvl_res
 
     
 #[1:30:6]
