@@ -29,6 +29,7 @@ def setShips(ogame,id,lvl_combustion):
         ogame.build_ships(id,Ships['Grandtransporteur'],1)
 
 def launch(ogame,id):
+    isUnderAttack(ogame,id)
     global_res = ogame.get_resources(id)
     res_build = ogame.get_resources_buildings(id)
     lvl_rerearchs = ogame.get_research()
@@ -79,15 +80,18 @@ def getMessage(ogame):
         if "Defense" in spanlist[i]:
             if(spanlist[i+1].text) == "0":
                 isdefnull = True
+                break;
         i=i+1
+
+    return (isflnull and isdefnull)
 
 def transporter(ogame,id,res,planet_mere):
     if(res > 400000):
-        ships = [(Ships['LargeCargo'], 10)]
+        ships = [(Ships['LargeCargo'], 5)]
         speed = Speed['100%']
         where = {'galaxy': 1, 'system': 30, 'position': 6}
         mission = Missions['Transport']
-        resources = { 'deuterium': 200000}
+        resources = { 'deuterium': 100000}
         ogame.send_fleet(id, ships, speed, where, mission, resources)
     print(res)
 
@@ -96,14 +100,14 @@ def setResearch(ogame,id):
     ogame.build(id, Research['Astrophysics'])
     if(lvl_res['energy_technology'] < 12):
         ogame.build(id,Research['EnergyTechnology'])
-    if(lvl_res['combustion_drive'] < 8):
-        ogame.build(id,Research['CombustionDrive'])
     if(lvl_res['laser_technology'] < 10):
         ogame.build(id,Research['LaserTechnology'])
     if(lvl_res['ion_technology'] < 5):
         ogame.build(id,Research['IonTechnology'])
     if(lvl_res['plasma_technology'] < 7):
         ogame.build(id,Research['PlasmaTechnology'])
+    if(lvl_res['combustion_drive'] < 8):
+        ogame.build(id,Research['CombustionDrive'])
 
     res = lvl_res.items()
     newkey = []
@@ -117,11 +121,23 @@ def setResearch(ogame,id):
 def setExpedition(ogame,id):
     pl_infos  = ogame.get_planet_infos(id)
     coord = pl_infos['coordinate']
-    ships = [(Ships['LargeCargo'], 30)]
+    ships = [(Ships['LargeCargo'], 30) , (Ships['EspionageProbe'],5)]
     speed = Speed['100%']
     where = {'galaxy': coord['galaxy'], 'system': coord['system'], 'position': 16}
     mission = Missions['Expedition']
     resources = { 'deuterium': 0}
     ogame.send_fleet(id, ships, speed, where, mission, resources)
-    
+
+def isUnderAttack(ogame,id):
+    i=408
+    if ogame.is_under_attack():
+        while i>400:
+            ogame.build(id,i)
+            i = i - 1
+
+def attack(ogame,id):
+    isgood = getMessage(ogame)
+    if(isgood):
+        i = 0
+
 #[1:30:6]

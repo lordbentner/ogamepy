@@ -25,9 +25,11 @@ class Afficheur(Thread):
             if  self.isRunning == True:
                 try:
                     id = self.id_pl[i]
-                    pl_info = self.ogame.get_planet_infos(id)                  
+                    pl_info = self.ogame.get_planet_infos(id)
+                    co = pl_info["coordinate"]
+                    pos = str(co["galaxy"])+":"+str(co["system"])+":"+str(co["position"])                  
                     print(pl_info['planet_name'])
-                    og_info = { "id_planet":pl_info['planet_name'], "content": function_ogame.launch(self.ogame,id) }
+                    og_info = { "id_planet":pl_info['planet_name'] ,"position": pos, "content": function_ogame.launch(self.ogame,id) }
                     self.ogame_infos[i] = og_info
                     self.isConnected = True
                     global_res = self.ogame.get_resources(id)
@@ -35,13 +37,10 @@ class Afficheur(Thread):
                         function_ogame.transporter(self.ogame,id,global_res['deuterium'],self.id_pl[0])
                     else:
                         self.lvl_research = function_ogame.setResearch(self.ogame,id)
-                except RuntimeError:
-                    print("RuntimeERror!!!!!!")
+                except (RuntimeError, KeyError,ConnectionError,TypeError):
+                    print("ExcpetERror!!!!!!")
                     self.isConnected = False
-                    self.ogame.login()
-                except ConnectionError:
-                    print("ConnectionError!!!!!!")
-                    self.isConnected = False
+                    self.ogame.logout()
                     self.ogame.login()
             i = i + 1            
             if i >= len(self.id_pl):

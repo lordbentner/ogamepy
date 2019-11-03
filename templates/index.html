@@ -48,7 +48,10 @@
         <tbody>
             {% for pl_info in ogame %}                   
             <tr>
-                <th scope="row">{{ pl_info["id_planet"] }}</th>
+                <th scope="row">{{ pl_info["id_planet"] }}
+                 <br />
+                 ({{ pl_info["position"] }})
+                </th>
                 {% for value in pl_info["content"] %}
                     <td>{{ value }}</td>
                 {% endfor %}
