@@ -36,7 +36,7 @@ class Afficheur(Thread):
                         function_ogame.transporter(self.ogame,id,global_res['deuterium'],self.id_pl[0])
                     else:
                         self.lvl_research = function_ogame.setResearch(self.ogame,id)
-                        
+
                     self.isConnected = True
                 except (RuntimeError,ConnectionError):
                     print("ExcpetERror!!!!!!")

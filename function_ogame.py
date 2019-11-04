@@ -62,7 +62,10 @@ def launch(ogame,id):
         ogame.build(id,Facilities['Shipyard'])
 
     setShips(ogame,id,lvl_rerearchs['combustion_drive'])
-    setExpedition(ogame,id)
+    try :
+        setExpedition(ogame,id)
+    except:
+        print("expedition deja envoye!!")    
     #attack(ogame,id)
     time.sleep(1)
     return array_infos
