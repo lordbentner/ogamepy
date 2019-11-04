@@ -63,27 +63,9 @@ def launch(ogame,id):
 
     setShips(ogame,id,lvl_rerearchs['combustion_drive'])
     setExpedition(ogame,id)
+    #attack(ogame,id)
     time.sleep(1)
     return array_infos
-
-def getMessage(ogame):
-    messages = ogame.session.get(ogame.get_url('messages')).content
-    soup = BeautifulSoup(messages,'html.parser')
-    spanlist = soup.findAll("span")
-    i = 0
-    isflnull = False
-    isdefnull = False
-    while i<len(spanlist):
-        if "Flottes" in spanlist[i]:
-            if(spanlist[i+1].text) == "0":
-                isflnull = True
-        if "Defense" in spanlist[i]:
-            if(spanlist[i+1].text) == "0":
-                isdefnull = True
-                break;
-        i=i+1
-
-    return (isflnull and isdefnull)
 
 def transporter(ogame,id,res,planet_mere):
     if(res > 400000):
@@ -132,8 +114,29 @@ def isUnderAttack(ogame,id):
     i=408
     if ogame.is_under_attack():
         while i>400:
-            ogame.build(id,i)
+            print("builded!!!!!")
+            ogame.build_defense(id,i,100)
             i = i - 1
+
+def getMessage(ogame):
+    messages = ogame.session.get(ogame.get_url('messages')).text
+    soup = BeautifulSoup(messages,'lxml')
+    spanlist = soup.findAll("span")
+    head = soup.find("div",class_="msg_head")
+    print(head)
+    i = 0
+    isflnull = False
+    isdefnull = False
+    while i<len(spanlist):
+        if "Flottes" in spanlist[i]:
+            if(spanlist[i+1].text) == "0":
+                isflnull = True
+        if "Defense" in spanlist[i]:
+            if(spanlist[i+1].text) == "0":
+                isdefnull = True      
+        i=i+1
+
+    return (isflnull and isdefnull)
 
 def attack(ogame,id):
     isgood = getMessage(ogame)
