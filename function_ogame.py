@@ -91,8 +91,9 @@ def setResearch(ogame,id):
         ogame.build(id,Research['IonTechnology'])
     if(lvl_res['plasma_technology'] < 7):
         ogame.build(id,Research['PlasmaTechnology'])
-    if(lvl_res['combustion_drive'] < 8):
-        ogame.build(id,Research['CombustionDrive'])
+
+    ogame.build(id,Research['CombustionDrive'])
+    ogame.build(id,Research['ArmourTechnology'])
 
     res = lvl_res.items()
     newkey = []
@@ -121,18 +122,36 @@ def isUnderAttack(ogame,id):
             ogame.build_defense(id,i,100)
             i = i - 1
 
+def galaxyinfo(ogame):
+    #status_abbr_inactive
+    #https://s153-fr.ogame.gameforge.com/game/index.php?page=galaxy
+    #galaxy = ogame.session.get(ogame.get_url('galaxy')).content
+    galaxy = ogame.galaxy_content(1, 30)['galaxy']
+    soup = BeautifulSoup(galaxy,'html.parser')
+    listplanet = soup.find_all("tr",{"class":"row inactive_filter"})
+    #print(listplanet)
+    for pl in listplanet:
+        res = pl.find("td",{"class":"position js_no_action"})
+        print(res.text)
+
 def getMessage(ogame):
-    messages = ogame.session.get(ogame.get_url('messages')).text
-    soup = BeautifulSoup(messages,'lxml')
-    spanlist = soup.findAll("span")
-    head = soup.find("div",class_="msg_head")
-    print(head)
-    i = 0
+    messages = ogame.session.get(ogame.get_url('messages&tab=20&ajax=1')).content
+    soup = BeautifulSoup(messages,'html.parser')
+    spanlist = soup.findAll("span",{"class":"msg_title blue_txt"})
+    alist = soup.findAll("a",{"class":"txt_link"})
     isflnull = False
     isdefnull = False
+    i=0
+    coord = []
     while i<len(spanlist):
-        if "Flottes" in spanlist[i]:
+        if "Rapport d" in spanlist[i].text:
+            coord = spanlist[i].text.split('[')[1].replace(']','').split(':')
+            print(coord)
+
+        if "Flottes:" in spanlist[i]:
+            #print(spanlist[i])
             if(spanlist[i+1].text) == "0":
+                print(spanlist[i])
                 isflnull = True
         if "Defense" in spanlist[i]:
             if(spanlist[i+1].text) == "0":

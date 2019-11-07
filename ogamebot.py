@@ -20,7 +20,10 @@ class Afficheur(Thread):
 
     def run(self):
         """Code à exécuter pendant l'exécution du thread."""      
-        i = 0        
+        i = 0
+        #function_ogame.getMessage(self.ogame)
+        #print(self.ogame.galaxy_infos('1','30'))
+        function_ogame.galaxyinfo(self.ogame)       
         while True:         
             if  self.isRunning == True:
                 try:
@@ -28,7 +31,7 @@ class Afficheur(Thread):
                     pl_info = self.ogame.get_planet_infos(id)
                     co = pl_info["coordinate"]
                     pos = str(co["galaxy"])+":"+str(co["system"])+":"+str(co["position"])                  
-                    print(pl_info['planet_name'])
+                    """print(pl_info['planet_name'])
                     og_info = { "id_planet":pl_info['planet_name'] ,"position": pos, "content": function_ogame.launch(self.ogame,id) }
                     self.ogame_infos[i] = og_info
                     global_res = self.ogame.get_resources(id)
@@ -36,8 +39,8 @@ class Afficheur(Thread):
                         function_ogame.transporter(self.ogame,id,global_res['deuterium'],self.id_pl[0])
                     else:
                         self.lvl_research = function_ogame.setResearch(self.ogame,id)
-
-                    self.isConnected = True
+                    """
+                    self.isConnected = True 
                 except (RuntimeError,ConnectionError):
                     print("ExcpetERror!!!!!!")
                     self.isConnected = False
