@@ -28,6 +28,31 @@ def setShips(ogame,id,lvl_combustion):
     if(ships['large_cargo'] < 30):
         ogame.build_ships(id,Ships['Grandtransporteur'],1)
 
+def globalbuild(ogame,id,fac,rbuild,g_res):
+    if(int(fac['robotics_factory']) < 10):
+        ogame.build(id,Facilities['RoboticsFactory'])
+    else:
+        ogame.build(id,Facilities['NaniteFactory'])
+        ogame.build(id,Facilities['Terraformer'])
+        if(fac['missile_silo'] <4):
+            ogame.build(id,Facilities['MissileSilo'])
+            ogame.build_defense(id,Defense['AntiBallisticMissiles'],1)
+    if(g_res['energy'] < 0):
+        ogame.build(id, Buildings['SolarPlant'])
+        satProduction(ogame,id,rbuild['solar_plant'],g_res['energy'])          
+    elif int(rbuild['metal_mine']) < int(rbuild['crystal_mine']) + 4:
+        ogame.build(id,Buildings['MetalStorage'])
+        ogame.build(id, Buildings['MetalMine'])
+    elif int(rbuild['crystal_mine']) < int(rbuild['deuterium_synthesizer']) + 4:
+        ogame.build(id,Buildings['CrystalStorage'])
+        ogame.build(id, Buildings['CrystalMine'])
+    else:
+        ogame.build(id, Buildings['DeuteriumTank'])
+        ogame.build(id, Buildings['DeuteriumSynthesizer'])
+   
+    if(fac['shipyard'] < 7):
+        ogame.build(id,Facilities['Shipyard'])
+
 def launch(ogame,id):
     isUnderAttack(ogame,id)
     global_res = ogame.get_resources(id)
@@ -37,30 +62,7 @@ def launch(ogame,id):
     ships = ogame.get_ships(id)
     array_infos = [ res_build,  lvl_facilities, ships ]  
     ogame.build(id, Research['Astrophysics'])
-    if(int(lvl_facilities['robotics_factory']) < 10):
-        ogame.build(id,Facilities['RoboticsFactory'])
-    else:
-        ogame.build(id,Facilities['NaniteFactory'])
-        ogame.build(id,Facilities['Terraformer'])
-        if(lvl_facilities['missile_silo'] <4):
-            ogame.build(id,Facilities['MissileSilo'])
-            ogame.build_defense(id,Defense['AntiBallisticMissiles'],1)
-    if(global_res['energy'] < 0):
-        #ogame.build(id, Buildings['SolarPlant'])
-        satProduction(ogame,id,res_build['solar_plant'],global_res['energy'])          
-    elif int(res_build['metal_mine']) < int(res_build['crystal_mine']) + 4:
-        ogame.build(id,Buildings['MetalStorage'])
-        ogame.build(id, Buildings['MetalMine'])
-    elif int(res_build['crystal_mine']) < int(res_build['deuterium_synthesizer']) + 4:
-        ogame.build(id,Buildings['CrystalStorage'])
-        ogame.build(id, Buildings['CrystalMine'])
-    else:
-        ogame.build(id, Buildings['DeuteriumTank'])
-        ogame.build(id, Buildings['DeuteriumSynthesizer'])
-   
-    if(lvl_facilities['shipyard'] < 7):
-        ogame.build(id,Facilities['Shipyard'])
-
+    globalbuild(ogame,id,lvl_facilities,res_build,global_res)
     setShips(ogame,id,lvl_rerearchs['combustion_drive'])
     try :
         setExpedition(ogame,id)
@@ -92,9 +94,9 @@ def setResearch(ogame,id):
     if(lvl_res['plasma_technology'] < 7):
         ogame.build(id,Research['PlasmaTechnology'])
 
+    ogame.build(id,Research['EspionageTechnology'])
     ogame.build(id,Research['CombustionDrive'])
     ogame.build(id,Research['ArmourTechnology'])
-
     res = lvl_res.items()
     newkey = []
     newvalues = []
@@ -122,47 +124,6 @@ def isUnderAttack(ogame,id):
             ogame.build_defense(id,i,100)
             i = i - 1
 
-def galaxyinfo(ogame):
-    #status_abbr_inactive
-    #https://s153-fr.ogame.gameforge.com/game/index.php?page=galaxy
-    #galaxy = ogame.session.get(ogame.get_url('galaxy')).content
-    galaxy = ogame.galaxy_content(1, 30)['galaxy']
-    soup = BeautifulSoup(galaxy,'html.parser')
-    listplanet = soup.find_all("tr",{"class":"row inactive_filter"})
-    #print(listplanet)
-    for pl in listplanet:
-        res = pl.find("td",{"class":"position js_no_action"})
-        print(res.text)
 
-def getMessage(ogame):
-    messages = ogame.session.get(ogame.get_url('messages&tab=20&ajax=1')).content
-    soup = BeautifulSoup(messages,'html.parser')
-    spanlist = soup.findAll("span",{"class":"msg_title blue_txt"})
-    alist = soup.findAll("a",{"class":"txt_link"})
-    isflnull = False
-    isdefnull = False
-    i=0
-    coord = []
-    while i<len(spanlist):
-        if "Rapport d" in spanlist[i].text:
-            coord = spanlist[i].text.split('[')[1].replace(']','').split(':')
-            print(coord)
-
-        if "Flottes:" in spanlist[i]:
-            #print(spanlist[i])
-            if(spanlist[i+1].text) == "0":
-                print(spanlist[i])
-                isflnull = True
-        if "Defense" in spanlist[i]:
-            if(spanlist[i+1].text) == "0":
-                isdefnull = True      
-        i=i+1
-
-    return (isflnull and isdefnull)
-
-def attack(ogame,id):
-    isgood = getMessage(ogame)
-    if(isgood):
-        i = 0
 
 #[1:30:6]
