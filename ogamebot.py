@@ -10,7 +10,7 @@ class Afficheur(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.isRunning = True
-        self.lvl_research = []
+        self.lvl_research = ["",""]  
         self.isConnected = False
         self.ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
         self.id_pl = self.ogame.get_planet_ids()
@@ -21,15 +21,13 @@ class Afficheur(Thread):
         i = 0
         co_gal = 1
         co_sys = 1  
-        while True:
-            self.lvl_research = ["",""]         
+        while True:       
             if  self.isRunning == True:
                 try:
                     id = self.id_pl[i]
                     pl_info = self.ogame.get_planet_infos(id)
                     co = pl_info["coordinate"]
                     pos = str(co["galaxy"])+":"+str(co["system"])+":"+str(co["position"])
-                    info_ogame.gestionAttack(self.ogame,id,co_gal,co_sys)
                     co_sys = co_sys+1
                     if co_sys >= 500:
                         co_sys = 1
@@ -46,6 +44,7 @@ class Afficheur(Thread):
                     else:
                         self.lvl_research = function_ogame.setResearch(self.ogame,id)
                     
+                    info_ogame.gestionAttack(self.ogame,id,co_gal,co_sys)
                     self.isConnected = True 
                 except (RuntimeError,ConnectionError):
                     print("ExcpetERror!!!!!!")

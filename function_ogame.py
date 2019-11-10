@@ -110,14 +110,15 @@ def setResearch(ogame,id):
     return newkey,newvalues
 
 def setExpedition(ogame,id):
+    sh = ogame.get_ships(id)
     pl_infos  = ogame.get_planet_infos(id)
     coord = pl_infos['coordinate']
-    ships = [(Ships['LargeCargo'], 30) , (Ships['EspionageProbe'],5)]
+    ships = [(203, 30) , (210,5) , (204,sh['light_fighter']),(205,sh['heavy_fighter']),
+    (206,sh['cruiser']),(207,sh['battleship']),(213,sh['destroyer'])]
     speed = Speed['100%']
     where = {'galaxy': coord['galaxy'], 'system': coord['system'], 'position': 16}
     mission = Missions['Expedition']
-    resources = { 'deuterium': 0}
-    ogame.send_fleet(id, ships, speed, where, mission, resources)
+    ogame.send_fleet(id, ships, speed, where, mission, {})
 
 def isUnderAttack(ogame,id):
     i=408

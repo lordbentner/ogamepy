@@ -34,12 +34,12 @@ def refresh():
 @app.route("/start/", methods=['POST'])
 def start():
     thread_1.StartRunning()
-    return render_template('index.html')
+    return refresh()
 
 @app.route("/stop/", methods=['POST'])
 def stop():
     thread_1.StopRunning()
-    return render_template('index.html')
+    return refresh()
 
 if __name__ == '__main__':
     launch_ogame()

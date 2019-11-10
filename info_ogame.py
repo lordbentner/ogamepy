@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 
 def gestionAttack(ogame,id,gal,sys):
     try:
-        getMessage(ogame,id)
-        getInactivePlanet(ogame,id,gal,sys)
+        if(getInactivePlanet(ogame,id,gal,sys) == True):
+            getMessage(ogame,id)
     except:
         print("Flottes deja envoyé!!")
 
@@ -15,13 +15,17 @@ def getInactivePlanet(ogame,id,gal,sys):
     soup = BeautifulSoup(galaxy,'html.parser')
     listplanet = soup.find_all("tr",{"class":"row inactive_filter"})
     coord_inactive = {}
+    inactiv_detected = False
     for pl in listplanet:
         res = pl.find("td",{"class":"position js_no_action"})
         coord = {'galaxy':gal,'system':sys,'position':int(res.text)}
         sendSpy(ogame,id,coord)
+        inactiv_detected = True
+    
+    return inactiv_detected
 
 def sendSpy(ogame,id_pl,coord):
-    ships = [(Ships['EspionageProbe'],5)]
+    ships = [(Ships['EspionageProbe'],15)]
     speed = Speed['100%']
     mission = Missions['Spy']
     resources = { 'deuterium': 0}
@@ -51,8 +55,12 @@ def getMessage(ogame,id):
             for res in reslist:
                 resources  = resources + int(res.text.replace(".","").replace("Métal: ","").replace("Cristal: ","").replace("Deutérium: ",""))
             
+            if resources < 25000:
+                return
             divlist = li.findAll("span",{"class":'msg_content'})
             for div in divlist:
                 if "Flottes: 0" in div.text and "Défense: 0" in div.text:
                     print("ressources pillables!!")
                     attack(ogame,id,coord,resources)
+
+#def getShips(ogame,id):
