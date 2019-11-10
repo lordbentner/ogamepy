@@ -3,6 +3,13 @@ from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense
 import time , math
 from bs4 import BeautifulSoup
 
+def gestionAttack(ogame,id,gal,sys):
+    try:
+        getMessage(ogame,id)
+        getInactivePlanet(ogame,id,gal,sys)
+    except:
+        print("Flottes deja envoyé!!")
+
 def getInactivePlanet(ogame,id,gal,sys):
     galaxy = ogame.galaxy_content(gal, sys)['galaxy']
     soup = BeautifulSoup(galaxy,'html.parser')
@@ -21,14 +28,15 @@ def sendSpy(ogame,id_pl,coord):
     print(coord)
     ogame.send_fleet(id_pl, ships, speed, coord, mission, resources)
 
-def attack(ogame,id,coord,res):
-    if(getMessage(ogame)):
-        ships = [(Ships['LargeCargo'], (res/25000)+1)]
-        speed = Speed['100%']
-        where = {'galaxy': coord['galaxy'], 'system': coord['system'], 'position': 16}
-        mission = Missions['Attack']
-        resources = { 'deuterium': 0}
-        ogame.send_fleet(id, ships, speed, where, mission, resources)        
+def attack(ogame,id,co,res):
+    print(res)
+    nb = round(res/25000)+1
+    ships = [(Ships['LargeCargo'], nb)]
+    speed = Speed['100%']
+    where = {'galaxy':co[0],'system':co[1],'position':co[2]}
+    mission = Missions['Attack']
+    print(where)
+    ogame.send_fleet(id, ships, speed, where, mission, {})        
 
 def getMessage(ogame,id):
     messages = ogame.session.get(ogame.get_url('messages&tab=20&ajax=1')).content
@@ -43,10 +51,8 @@ def getMessage(ogame,id):
             for res in reslist:
                 resources  = resources + int(res.text.replace(".","").replace("Métal: ","").replace("Cristal: ","").replace("Deutérium: ",""))
             
-            print(resources)
-            print(coord)
-            divlist = li.findAll("div",{"class":"comptacting"})
+            divlist = li.findAll("span",{"class":'msg_content'})
             for div in divlist:
                 if "Flottes: 0" in div.text and "Défense: 0" in div.text:
-                    #attack(ogame,id,coord)
-                    print("attack ok")
+                    print("ressources pillables!!")
+                    attack(ogame,id,coord,resources)

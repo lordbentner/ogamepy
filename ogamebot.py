@@ -19,7 +19,8 @@ class Afficheur(Thread):
     def run(self):
         """Code à exécuter pendant l'exécution du thread."""      
         i = 0
-        #function_ogame.getMessage(self.ogame)  
+        co_gal = 1
+        co_sys = 1  
         while True:
             self.lvl_research = ["",""]         
             if  self.isRunning == True:
@@ -28,8 +29,14 @@ class Afficheur(Thread):
                     pl_info = self.ogame.get_planet_infos(id)
                     co = pl_info["coordinate"]
                     pos = str(co["galaxy"])+":"+str(co["system"])+":"+str(co["position"])
-                    #info_ogame.getInactivePlanet(self.ogame,id,co["galaxy"],co["system"])
-                    #info_ogame.getMessage(self.ogame,id)
+                    info_ogame.gestionAttack(self.ogame,id,co_gal,co_sys)
+                    co_sys = co_sys+1
+                    if co_sys >= 500:
+                        co_sys = 1
+                        co_gal = co_gal+1
+                    if co_gal >= 6:
+                        co_gal = 1
+
                     print(pl_info['planet_name'])
                     og_info = { "id_planet":pl_info['planet_name'] ,"position": pos, "content": function_ogame.launch(self.ogame,id) }
                     self.ogame_infos[i] = og_info
@@ -50,8 +57,7 @@ class Afficheur(Thread):
             i = i + 1            
             if i >= len(self.id_pl):
                 i = 0
-
-        print("end of thread!!")
+                time.sleep(1)
 
     def StopRunning(self):
         self.ogame.logout()

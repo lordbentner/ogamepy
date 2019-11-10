@@ -50,7 +50,7 @@ def globalbuild(ogame,id,fac,rbuild,g_res):
         ogame.build(id, Buildings['DeuteriumTank'])
         ogame.build(id, Buildings['DeuteriumSynthesizer'])
    
-    if(fac['shipyard'] < 7):
+    if(fac['shipyard'] < 8):
         ogame.build(id,Facilities['Shipyard'])
 
 def launch(ogame,id):
@@ -69,7 +69,6 @@ def launch(ogame,id):
     except:
         print("expedition deja envoye!!")    
     #attack(ogame,id)
-    time.sleep(1)
     return array_infos
 
 def transporter(ogame,id,res,planet_mere):
@@ -93,10 +92,14 @@ def setResearch(ogame,id):
         ogame.build(id,Research['IonTechnology'])
     if(lvl_res['plasma_technology'] < 7):
         ogame.build(id,Research['PlasmaTechnology'])
+    if(lvl_res['weapons_technology'] < 3):
+        ogame.build(id,Research['WeaponsTechnology'])
+    if(lvl_res['shielding_technology'] < 1):
+        ogame.build(id,Research['ShieldingTechnology'])
 
     ogame.build(id,Research['EspionageTechnology'])
-    ogame.build(id,Research['CombustionDrive'])
     ogame.build(id,Research['ArmourTechnology'])
+    ogame.build(id,Research['CombustionDrive'])
     res = lvl_res.items()
     newkey = []
     newvalues = []
