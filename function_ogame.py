@@ -3,6 +3,7 @@ from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense
 import time , math
 from bs4 import BeautifulSoup
 
+
 def satProduction(ogame,id,lvl_centrale,energy):
     planet_infos = ogame.get_planet_infos(id)
     tmax = planet_infos['temperature']['max']
@@ -55,6 +56,7 @@ def globalbuild(ogame,id,fac,rbuild,g_res):
 
 def launch(ogame,id):
     isUnderAttack(ogame,id)
+    getInConstruction(ogame,id)
     global_res = ogame.get_resources(id)
     res_build = ogame.get_resources_buildings(id)
     lvl_rerearchs = ogame.get_research()
@@ -120,6 +122,12 @@ def setExpedition(ogame,id):
     mission = Missions['Expedition']
     ogame.send_fleet(id, ships, speed, where, mission, {})
 
+def getInConstruction(ogame,id):
+    incons = ogame.constructions_being_built(id)
+    for con in incons:
+        print(get_code(con))
+    
+
 def isUnderAttack(ogame,id):
     i=408
     if ogame.is_under_attack():
@@ -128,6 +136,21 @@ def isUnderAttack(ogame,id):
             ogame.build_defense(id,i,100)
             i = i - 1
 
+def get_code(name):
+    array = {}
+    if int(name) in Buildings.values():       
+        array = Buildings
+    if int(name) in Facilities.values():
+        array = Facilities
+    if int(name) in Defense.values():
+        array = Defense
+    if int(name) in Ships.values():
+        array = Ships
+    if int(name) in Research.values():
+        array = Research
+    #print('Couldn\'t find code for {}'.format(name))
+    for key,value in array.items():
+        if value == int(name):
+            return key
 
-
-#[1:30:6]
+    return None

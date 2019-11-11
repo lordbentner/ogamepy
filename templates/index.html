@@ -26,7 +26,8 @@
         <tbody>
            <tr>
                 {% for keyz in research[0] %}
-                    <td><center>{{keyz | replace("_technology","")}}</center> </td>                   
+                    <td><center>{{keyz | replace("_technology","") | replace("_drive","")
+                     | replace("_network","")  }}</center> </td>                   
                 {% endfor %}
             </tr>
             <tr>
@@ -43,6 +44,7 @@
             <th scope="col">lvl des ressources</th>
             <th scope="col">lvl installations</th>
             <th scope="col">Vaisseaux</th>
+            <th scope="col">En construction</th>
             </tr>
         </thead>
         <tbody>

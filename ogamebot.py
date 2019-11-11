@@ -19,8 +19,8 @@ class Afficheur(Thread):
     def run(self):
         """Code à exécuter pendant l'exécution du thread."""      
         i = 0
-        co_gal = 1
-        co_sys = 1  
+        co_gal = 2
+        co_sys = 202  
         while True:       
             if  self.isRunning == True:
                 try:
@@ -50,6 +50,8 @@ class Afficheur(Thread):
                     print("ExcpetERror!!!!!!")
                     self.isConnected = False
                     self.ogame.logout()
+            else:
+                print("not running...")
 
             if self.isConnected == False:
                 self.ogame.login()
@@ -59,9 +61,7 @@ class Afficheur(Thread):
                 time.sleep(1)
 
     def StopRunning(self):
-        self.ogame.logout()
         self.isRunning = False
 
     def StartRunning(self):
-        self.ogame.login()
         self.isConnected = True
