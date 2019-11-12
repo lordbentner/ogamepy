@@ -56,13 +56,13 @@ def globalbuild(ogame,id,fac,rbuild,g_res):
 
 def launch(ogame,id):
     isUnderAttack(ogame,id)
-    getInConstruction(ogame,id)
+    inbuild = getInConstruction(ogame,id)
     global_res = ogame.get_resources(id)
     res_build = ogame.get_resources_buildings(id)
     lvl_rerearchs = ogame.get_research()
     lvl_facilities = ogame.get_facilities(id)
     ships = ogame.get_ships(id)
-    array_infos = [ res_build,  lvl_facilities, ships ]  
+    array_infos = [ res_build.items(), lvl_facilities.items(), ships.items(), inbuild.items() ]  
     ogame.build(id, Research['Astrophysics'])
     globalbuild(ogame,id,lvl_facilities,res_build,global_res)
     setShips(ogame,id,lvl_rerearchs['combustion_drive'])
@@ -70,18 +70,20 @@ def launch(ogame,id):
         setExpedition(ogame,id)
     except:
         print("expedition deja envoye!!")    
-    #attack(ogame,id)
+
     return array_infos
 
 def transporter(ogame,id,res,planet_mere):
-    if(res > 400000):
-        ships = [(Ships['LargeCargo'], 5)]
-        speed = Speed['100%']
-        where = {'galaxy': 1, 'system': 30, 'position': 6}
-        mission = Missions['Transport']
-        resources = { 'deuterium': 100000}
-        ogame.send_fleet(id, ships, speed, where, mission, resources)
-    print(res)
+    try:
+        if(res > 400000):
+            ships = [(Ships['LargeCargo'], 5)]
+            speed = Speed['100%']
+            where = {'galaxy': 1, 'system': 30, 'position': 6}
+            mission = Missions['Transport']
+            resources = { 'deuterium': 100000}
+            ogame.send_fleet(id, ships, speed, where, mission, resources)
+    except:
+        print("transport deja envoyé!")
 
 def setResearch(ogame,id):
     lvl_res = ogame.get_research()
@@ -115,7 +117,7 @@ def setExpedition(ogame,id):
     sh = ogame.get_ships(id)
     pl_infos  = ogame.get_planet_infos(id)
     coord = pl_infos['coordinate']
-    ships = [(203, 30) , (210,5) , (204,sh['light_fighter']),(205,sh['heavy_fighter']),
+    ships = [(203, 30) , (210,5) ,(202,sh['small_cargo ']), (204,sh['light_fighter']),(205,sh['heavy_fighter']),
     (206,sh['cruiser']),(207,sh['battleship']),(213,sh['destroyer'])]
     speed = Speed['100%']
     where = {'galaxy': coord['galaxy'], 'system': coord['system'], 'position': 16}
@@ -124,10 +126,18 @@ def setExpedition(ogame,id):
 
 def getInConstruction(ogame,id):
     incons = ogame.constructions_being_built(id)
-    for con in incons:
-        print(get_code(con))
-    
+    res = {}
+    i=1
+    for con in incons: 
+        inbuild =  get_code(con)
+        if not inbuild == None:
+            keyz = str(i)+'-'
+            res[keyz] = inbuild
+            i=i+1
 
+    return res
+
+    
 def isUnderAttack(ogame,id):
     i=408
     if ogame.is_under_attack():
@@ -148,7 +158,7 @@ def get_code(name):
         array = Ships
     if int(name) in Research.values():
         array = Research
-    #print('Couldn\'t find code for {}'.format(name))
+
     for key,value in array.items():
         if value == int(name):
             return key

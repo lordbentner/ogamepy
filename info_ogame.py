@@ -62,5 +62,3 @@ def getMessage(ogame,id):
                 if "Flottes: 0" in div.text and "Défense: 0" in div.text:
                     print("ressources pillables!!")
                     attack(ogame,id,coord,resources)
-
-#def getShips(ogame,id):
