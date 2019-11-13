@@ -100,6 +100,7 @@ def setResearch(ogame,id):
         ogame.build(id,Research['ShieldingTechnology'])
 
     ogame.build(id,Research['EspionageTechnology'])
+    ogame.build(id,Research['ComputerTechnology'])
     ogame.build(id,Research['ArmourTechnology'])
     ogame.build(id,Research['CombustionDrive'])
     res = lvl_res.items()

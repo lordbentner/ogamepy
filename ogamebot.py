@@ -64,4 +64,4 @@ class Afficheur(Thread):
         self.isRunning = False
 
     def StartRunning(self):
-        self.isConnected = True
+        self.isRunning = True
