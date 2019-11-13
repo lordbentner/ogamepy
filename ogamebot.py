@@ -64,4 +64,5 @@ class Afficheur(Thread):
         self.isRunning = False
 
     def StartRunning(self):
+        
         self.isRunning = True
