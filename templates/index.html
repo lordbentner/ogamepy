@@ -53,9 +53,21 @@
                 <th scope="row">{{ pl_info["id_planet"] }}
                  <br />
                  ({{ pl_info["position"] }})
+                 <br />
+                 <ul>
+                 {% for key,value in pl_info["resources"]%}
+                    <li>{{key}}:{{value}}</li>
+                    {% endfor %}
+                </ul>
                 </th>
-                {% for value in pl_info["content"] %}
-                    <td>{{ value }}</td>
+                {% for content in pl_info["content"] %}
+                    <td><ul>
+                    {% for key,value in content %}
+                        {% if not value == 0 %}
+                            <li>{{key}} : {{value}}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul></td>
                 {% endfor %}
             </tr>    
             {% endfor %}

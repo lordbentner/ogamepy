@@ -20,7 +20,7 @@ class Afficheur(Thread):
         """Code à exécuter pendant l'exécution du thread."""      
         i = 0
         co_gal = 2
-        co_sys = 202  
+        co_sys = 291 
         while True:       
             if  self.isRunning == True:
                 try:
@@ -36,9 +36,9 @@ class Afficheur(Thread):
                         co_gal = 1
 
                     print(pl_info['planet_name'])
-                    og_info = { "id_planet":pl_info['planet_name'] ,"position": pos, "content": function_ogame.launch(self.ogame,id) }
-                    self.ogame_infos[i] = og_info
                     global_res = self.ogame.get_resources(id)
+                    og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,"resources":global_res.items(), "content": function_ogame.launch(self.ogame,id) }
+                    self.ogame_infos[i] = og_info
                     if i!=0:
                         function_ogame.transporter(self.ogame,id,global_res['deuterium'],self.id_pl[0])
                     else:
