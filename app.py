@@ -23,13 +23,15 @@ def launch_ogame():
 
 @app.route('/')
 def hello():
+    info = [ thread_1.isConnected,thread_1.isRunning,app.debug ]
     return render_template('index.html',ogame=thread_1.ogame_infos,
-    len=len(thread_1.ogame_infos),research=thread_1.lvl_research,isCon=thread_1.isConnected)
+    len=len(thread_1.ogame_infos),research=thread_1.lvl_research,info=info)
 
 @app.route('/refresh/', methods=['POST'])
 def refresh():
+    info = [ thread_1.isConnected,thread_1.isRunning,app.debug ]
     return render_template('index.html',ogame=thread_1.ogame_infos,
-    len=len(thread_1.ogame_infos),research=thread_1.lvl_research,isCon=thread_1.isConnected)
+    len=len(thread_1.ogame_infos),research=thread_1.lvl_research,info=info)
 
 @app.route("/start/", methods=['POST'])
 def start():

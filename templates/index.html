@@ -19,7 +19,8 @@
         <form action="/refresh/" method="post">
         <button class="btn btn-info" type="submit">Refresh</button>
     </form>
-    <h2>Etat Connection:{{isCon}}</h2>
+    <h2>Etat Connection:{{info[0]}}</h2>
+    <h2>Etat de lancement:{{info[1]}}</h2>
 </nav>
     <table class="table table-bordered">
         <thead><tr>niveau des recherches</tr></thead>
@@ -73,5 +74,6 @@
             {% endfor %}
         </tbody>
     </table>
+    <div>{{info[2] | pprint}}
 </body>
 </html>

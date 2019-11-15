@@ -1,6 +1,7 @@
 from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
-import time , math,function_ogame,random,sys,requests, info_ogame
+import time , math,random,sys,requests, info_ogame
+from function_ogame import f_ogame
 from threading import Thread
 from flask import Flask ,jsonify,render_template
 from bs4 import BeautifulSoup
@@ -15,6 +16,7 @@ class Afficheur(Thread):
         self.ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
         self.id_pl = self.ogame.get_planet_ids()
         self.ogame_infos = [""]*len(self.id_pl)
+        self.f_o = f_ogame()
 
     def run(self):
         """Code à exécuter pendant l'exécution du thread."""      
@@ -37,12 +39,12 @@ class Afficheur(Thread):
 
                     print(pl_info['planet_name'])
                     global_res = self.ogame.get_resources(id)
-                    og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,"resources":global_res.items(), "content": function_ogame.launch(self.ogame,id) }
+                    og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,"resources":global_res.items(), "content": self.f_o.launch(self.ogame,id) }
                     self.ogame_infos[i] = og_info
                     if i!=0:
-                        function_ogame.transporter(self.ogame,id,global_res['deuterium'],self.id_pl[0])
+                        self.f_o.transporter(self.ogame,id)
                     else:
-                        self.lvl_research = function_ogame.setResearch(self.ogame,id)
+                        self.lvl_research = self.f_o.setResearch(self.ogame,id)
                     
                     info_ogame.gestionAttack(self.ogame,id,co_gal,co_sys)
                     self.isConnected = True 
@@ -64,5 +66,4 @@ class Afficheur(Thread):
         self.isRunning = False
 
     def StartRunning(self):
-        
-        self.isRunning = True
+        self.isConnected = True
