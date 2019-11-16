@@ -9,26 +9,27 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <form action="/start/" method="post">
-        <button class="btn btn-primary" type="submit">Start</button>
+    <form action="/start/" method="post">
+        <button class="btn btn-danger" type="submit">Start</button>
     </form>
-        <form action="/stop/" method="post">
+    <form action="/stop/" method="post">
         <button class="btn btn-danger" type="submit">Stop</button>
     </form>
     </form>
         <form action="/refresh/" method="post">
         <button class="btn btn-info" type="submit">Refresh</button>
     </form>
-    <h2>Etat Connection:{{info[0]}}</h2>
-    <h2>Etat de lancement:{{info[1]}}</h2>
+    <h2 class="navbar-text">Etat Connection:{{info[0]}}</h2>
+    <h2 class="navbar-text">Etat de lancement:{{info[1]}}</h2>
 </nav>
+<div class="table-responsive">
     <table class="table table-bordered">
-        <thead><tr>niveau des recherches</tr></thead>
+        <thead class="text-center"><tr><h3>niveau des recherches</h3></tr></thead>
         <tbody>
            <tr>
                 {% for keyz in research[0] %}
-                    <td><center>{{keyz | replace("_technology","") | replace("_drive","")
-                     | replace("_network","")  }}</center> </td>                   
+                    <td><center>{{keyz | replace("_technology","") | replace("_drive"," drive")
+                     | replace("_network","") | replace("_"," ")  }}</center> </td>                   
                 {% endfor %}
             </tr>
             <tr>
@@ -38,14 +39,16 @@
             </tr>         
         </tbody>
     </table>
-    <table class="table">
+</div>
+<div class="card">
+    <table class="table table-bordered table-dark">
         <thead>
             <tr>
-            <th scope="col">Planète</th>
-            <th scope="col">lvl des ressources</th>
-            <th scope="col">lvl installations</th>
-            <th scope="col">Vaisseaux</th>
-            <th scope="col">En construction</th>
+                <th scope="col" class="text-center">Planète</th>
+                <th scope="col" class="text-center">lvl des ressources</th>
+                <th scope="col" class="text-center">lvl installations</th>
+                <th scope="col" class="text-center">Vaisseaux</th>
+                <th scope="col" class="text-center">En construction</th>
             </tr>
         </thead>
         <tbody>
@@ -55,25 +58,23 @@
                  <br />
                  ({{ pl_info["position"] }})
                  <br />
-                 <ul>
                  {% for key,value in pl_info["resources"]%}
-                    <li>{{key}}:{{value}}</li>
+                    <p>{{key}}:{{value}}</p>
                     {% endfor %}
-                </ul>
                 </th>
                 {% for content in pl_info["content"] %}
-                    <td><ul>
+                    <td>
                     {% for key,value in content %}
                         {% if not value == 0 %}
-                            <li>{{key}} : {{value}}</li>
+                            <p>{{key}} : {{value}}</p>
                         {% endif %}
                     {% endfor %}
-                    </ul></td>
+                    </td>
                 {% endfor %}
             </tr>    
             {% endfor %}
         </tbody>
     </table>
-    <div>{{info[2] | pprint}}
+</div>
 </body>
 </html>
