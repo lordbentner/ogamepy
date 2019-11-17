@@ -43,6 +43,10 @@ def stop():
     thread_1.StopRunning()
     return refresh()
 
+@app.route("/log/",methods=['POST'])
+def log():
+    return render_template('log.html',info_log=thread_1.info_log,info_log2=thread_1.infoLog2)
+
 if __name__ == '__main__':
     launch_ogame()
     app.run(use_reloader = True,host=IP,port=PORT)

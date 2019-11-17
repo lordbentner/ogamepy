@@ -2,6 +2,7 @@ from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math,random,sys,requests, info_ogame
 from function_ogame import f_ogame
+from info_ogame import i_ogame
 from threading import Thread
 from flask import Flask ,jsonify,render_template
 from bs4 import BeautifulSoup
@@ -17,6 +18,9 @@ class Afficheur(Thread):
         self.id_pl = self.ogame.get_planet_ids()
         self.ogame_infos = [""]*len(self.id_pl)
         self.f_o = f_ogame()
+        self.i_o = i_ogame()
+        self.info_log = []
+        self.infoLog2 = []
 
     def run(self):
         """Code à exécuter pendant l'exécution du thread."""      
@@ -37,7 +41,7 @@ class Afficheur(Thread):
                     if co_gal >= 6:
                         co_gal = 1
 
-                    print(pl_info['planet_name'])
+                    self.f_o.prints(pl_info['planet_name'])
                     global_res = self.ogame.get_resources(id)
                     og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,"resources":global_res.items(), "content": self.f_o.launch(self.ogame,id) }
                     self.ogame_infos[i] = og_info
@@ -46,14 +50,17 @@ class Afficheur(Thread):
                     else:
                         self.lvl_research = self.f_o.setResearch(self.ogame,id)
                     
-                    info_ogame.gestionAttack(self.ogame,id,co_gal,co_sys)
-                    self.isConnected = True 
+                    self.i_o.gestionAttack(self.ogame,id,co_gal,co_sys)
+                    self.isConnected = True
+                    self.info_log = self.f_o.info_log
+                    self.infoLog2 = self.i_o.infoLog 
                 except (RuntimeError,ConnectionError):
-                    print("ExcpetERror!!!!!!")
+                    f_o.prints("ExcpetERror!!!!!!")
                     self.isConnected = False
                     self.ogame.logout()
             else:
-                print("not running...")
+                self.f_o.prints("not running...")
+                time.sleep(1) 
 
             if self.isConnected == False:
                 self.ogame.login()

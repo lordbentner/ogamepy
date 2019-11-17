@@ -3,10 +3,10 @@ from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense
 import time , math
 from bs4 import BeautifulSoup
 
-
 class f_ogame():
 
-    def _init_(self):
+    def __init__(self):
+        self.info_log = [""]
         self.coord_plMere = {'galaxy':1,'system':30,'position':6 }
 
     def launch(self,ogame,id):
@@ -27,10 +27,12 @@ class f_ogame():
         try :
             self.setExpedition(ogame,id)
         except:
-            print("expedition deja envoye!!")    
+            self.prints("expedition deja envoye")    
 
         return array_infos
 
+    def prints(self,text):
+        self.info_log.append(text)
 
     def satProduction(self,ogame,id):
         tmax = self.planet_infos['temperature']['max']
@@ -40,10 +42,10 @@ class f_ogame():
         nbsat = self.g_res['energy']/prodsat
         coutcen = 30*math.pow(1.5,self.res_build['solar_plant']-1)
         if(nbsat*2000 < coutcen):
-            print("build sat")
+            self.prints("build sat")
             ogame.build_ships(id,Ships['SolarSatellite'],1)
         else:
-            print("building centrale")
+            self.prints("building centrale")
             ogame.build(id,Buildings['SolarPlant'])
 
     def setShips(self,ogame,id):
@@ -89,7 +91,7 @@ class f_ogame():
                 resources = { 'deuterium': 100000}
                 ogame.send_fleet(id, ships, speed, where, mission, resources)
         except:
-            print("transport deja envoyé!")
+            self.prints("transport deja envoyé!")
 
     def setResearch(self,ogame,id):
         if(self.facilities['research_lab'] < 9):
@@ -160,7 +162,7 @@ class f_ogame():
         resources = { 'deuterium': self.g_res['deuterium']}
         ogame.send_fleet(idpl, ships, speed, where, mission, resources)
         while i>400:
-            print("builded!!!!!")
+            self.prints("builded!!!!!")
             ogame.build_defense(id,i,self.g_res['metal'])
             i = i - 1
 
