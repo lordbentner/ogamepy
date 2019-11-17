@@ -2,6 +2,7 @@ from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 class f_ogame():
 
@@ -32,7 +33,10 @@ class f_ogame():
         return array_infos
 
     def prints(self,text):
-        self.info_log.append(text)
+        now = datetime.now()
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        self.info_log.append(dt_string+": "+text)
 
     def satProduction(self,ogame,id):
         tmax = self.planet_infos['temperature']['max']

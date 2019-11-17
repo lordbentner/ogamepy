@@ -2,6 +2,7 @@ from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 class i_ogame():
 
@@ -14,7 +15,10 @@ class i_ogame():
                 getMessage(ogame,id)
         except:
             coord = "galaxy:"+str(gal)+" system:"+str(sys)
-            self.infoLog.append("Flottes deja envoyé: "+coord)
+            now = datetime.now()
+            # dd/mm/YY H:M:S
+            dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+            self.infoLog.append(dt_string+": Flottes deja envoyé: "+coord)
 
     def getInactivePlanet(self,ogame,id,gal,sys):
         galaxy = ogame.galaxy_content(gal, sys)['galaxy']
@@ -36,7 +40,10 @@ class i_ogame():
         mission = Missions['Spy']
         resources = { 'deuterium': 0}
         ogame.send_fleet(id_pl, ships, speed, coord, mission, resources)
-        self.infoLog.append("sonde envoyé vers"+coord)
+        now = datetime.now()
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        self.infoLog.append(dt_string+": sonde envoyé vers"+coord)
 
     def attack(self,ogame,id,co,res):
         nb = round(res/25000)+1
@@ -45,7 +52,10 @@ class i_ogame():
         where = {'galaxy':co[0],'system':co[1],'position':co[2]}
         mission = Missions['Attack']
         ogame.send_fleet(id, ships, speed, where, mission, {})
-        self.infoLog.append("ressources pillables dans"+where)       
+        now = datetime.now()
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        self.infoLog.append(dt_string+": ressources pillables dans"+where)       
 
     def getMessage(self,ogame,id):
         messages = ogame.session.get(ogame.get_url('messages&tab=20&ajax=1')).content
