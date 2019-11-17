@@ -8,6 +8,9 @@
 <title>Ogame Bot</title>
 </head>
 <body>
+<form action="/" method="post">
+    <button class="btn btn-primary btn-lg btn-block" type="submit">Retour</button>
+</form>
 <div class="card">
     <table class="table table-bordered table-dark">
         <thead><tr>
@@ -21,7 +24,7 @@
         {% endfor %}
         </td>
         <td>
-            {% for log2 in infoLog2 %}
+            {% for log2 in info_log2 %}
                 <p>{{log2}}</p>
             {% endfor %}
         </td>
