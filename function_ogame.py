@@ -11,6 +11,7 @@ class f_ogame():
         self.coord_plMere = {'galaxy':1,'system':30,'position':6 }
 
     def launch(self,ogame,id):
+        self.id_pl = ogame.get_planet_ids()
         self.fleets = ogame.get_fleets()
         self.id_pl = ogame.get_planet_ids()
         self.planet_infos = ogame.get_planet_infos(id)
@@ -20,7 +21,10 @@ class f_ogame():
         self.research = ogame.get_research()
         self.facilities = ogame.get_facilities(id)
         self.ships = ogame.get_ships(id)
-        self.isUnderAttack(ogame,id)
+        try:
+            self.isUnderAttack(ogame,id)
+        except Exception as ex:
+            self.prints("Erreur sur la gestion défense!!")
         array_infos = [ self.res_build.items(), self.facilities.items(), self.ships.items(), self.inbuild.items() ]  
         ogame.build(id, Research['Astrophysics'])
         self.globalbuild(ogame,id)
@@ -160,7 +164,7 @@ class f_ogame():
         speed = Speed['100%']
         where = self.coord_plMere
         idpl = id
-        if id == self.planet_infos[0]:
+        if id == self.id_pl[0]:
             where = {'galaxy':1,'system':150,'position':7}
 
         mission = Missions['Transport']

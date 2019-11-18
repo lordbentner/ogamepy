@@ -58,6 +58,8 @@ class Afficheur(Thread):
                     f_o.prints("ExcpetERror!!!!!!")
                     self.isConnected = False
                     self.ogame.logout()
+                except Exception as ex:
+                    self.f_o.prints(str(ex))
             else:
                 self.f_o.prints("not running...")
                 time.sleep(1) 
