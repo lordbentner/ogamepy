@@ -14,6 +14,7 @@ if("opt" in dir_path):
     IP='0.0.0.0'
 
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 thread_1 = Afficheur()
 
 def launch_ogame():
@@ -49,4 +50,4 @@ def log():
 
 if __name__ == '__main__':
     launch_ogame()
-    app.run(use_reloader = True,host=IP,port=PORT)
+    app.run(use_reloader = True,host=IP,port=PORT,debug=True)

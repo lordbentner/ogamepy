@@ -17,13 +17,26 @@
     </form>
     </form>
         <form action="/refresh/" method="post">
-        <button class="btn btn-info" type="submit">Refresh</button>
+        <button class="btn btn-info btn-lg btn-block" type="submit">Refresh</button>
     </form>
-    <h2 class="navbar-text">Etat Connection:{{info[0]}}</h2>
-    <h2 class="navbar-text">Etat de lancement:{{info[1]}}</h2>
-    </form>
+    <span class="navbar-text">Etat Connection:
+        {% if info[0] == True %}
+            <div class="green"></div>
+        {% endif %}
+        {% if info[0] == False %}
+            <div class="red"></div>
+        {% endif %}
+    </span>
+    <span class="navbar-text">Etat de lancement:
+        {% if info[1] == True %}
+            <div class="green"></div>
+        {% endif %}
+        {% if info[1] == False %}
+            <div class="red"></div>
+        {% endif %}
+    </span>
         <form action="/log/" method="post">
-        <button class="btn btn-info" type="submit">Log</button>
+        <button class="btn btn-info btn-lg btn-block" type="submit">Log</button>
     </form>
 </nav>
 <div class="table-responsive">
@@ -33,7 +46,7 @@
            <tr>
                 {% for keyz in research[0] %}
                     <td><center>{{keyz | replace("_technology","") | replace("_drive"," drive")
-                     | replace("_network","") | replace("_"," ")  }}</center> </td>                   
+                     | replace("_network","") | replace("_"," ")  }}</center></td>                   
                 {% endfor %}
             </tr>
             <tr>

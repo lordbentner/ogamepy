@@ -30,6 +30,7 @@ class Afficheur(Thread):
         while True:       
             if  self.isRunning == True:
                 try:
+                    self.id_pl = self.ogame.get_planet_ids()
                     id = self.id_pl[i]
                     pl_info = self.ogame.get_planet_infos(id)
                     co = pl_info["coordinate"]
