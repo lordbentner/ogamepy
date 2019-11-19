@@ -22,7 +22,11 @@ class Afficheur(Thread):
     def initOgame(self):
         try:
             self.ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
+            self.id_pl = self.ogame.get_planet_ids()
+            self.ogame_infos = [""]*len(self.id_pl)
+            print("Connexion réussi")
         except:
+            print("echec de connexion!re-tentative...")
             return self.initOgame()
 
     def loginOgame(self):
@@ -32,8 +36,6 @@ class Afficheur(Thread):
         except:
             self.ogame.logout()
             return self.loginOgame()
-
-
 
     def run(self):
         """Code à exécuter pendant l'exécution du thread."""      
@@ -45,7 +47,6 @@ class Afficheur(Thread):
             if  self.isRunning == True:
                 try:
                     self.id_pl = self.ogame.get_planet_ids()
-                    self.ogame_infos = [""]*len(self.id_pl)
                     id = self.id_pl[i]
                     pl_info = self.ogame.get_planet_infos(id)
                     co = pl_info["coordinate"]
@@ -57,7 +58,7 @@ class Afficheur(Thread):
                     if co_gal >= 6:
                         co_gal = 1
 
-                    #self.f_o.prints(pl_info['planet_name'])
+                    print(pl_info['planet_name'])
                     global_res = self.ogame.get_resources(id)
                     og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,"resources":global_res.items(), "content": self.f_o.launch(self.ogame,id) }
                     self.ogame_infos[i] = og_info
@@ -73,11 +74,10 @@ class Afficheur(Thread):
                 except (RuntimeError,ConnectionError):
                     f_o.prints("ExcpetERror!!!!!!")
                     self.isConnected = False
-                    self.ogame.logout()
                 except Exception as ex:
+                    print(str(ex))
                     self.f_o.prints(str(ex))
 
-            self.loginOgame()
             i = i + 1            
             if i >= len(self.id_pl):
                 i = 0

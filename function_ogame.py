@@ -10,11 +10,36 @@ class f_ogame():
         self.info_log = [""]
         self.coord_plMere = {'galaxy':1,'system':30,'position':6 }
 
+    def fleets_info(self,ogame):
+        self.fleets = ogame.get_fleets()
+        co = self.planet_infos["coordinate"]
+        pos = (co["galaxy"],co["system"],co["position"])
+        i=0
+        newfleet = {}
+        newres = {}
+        coord = ()
+        array_fleets = {}
+        for fleet in self.fleets:
+            for ships in fleet['ships']:
+                if not ships == 0:
+                    newfleet.append(ships)
+            for resource in fleet['resources']:
+                if not resource == 0:
+                    newres.append(resource)
+
+            mission = self.getMission(fleet['Missions'])
+            if fleet['origin'] == pos:            
+                coord = {"flotte envoye vers":fleet['destination']}
+                array_fleets.append(coord,newres,newfleet)
+            elif fleet['destination'] == pos:
+                coord = {"flotte envoye depuis":fleet['origin']}
+                array_fleets.append(coord,mission,newres,newfleet)
+       
+        return array_fleets
+
     def launch(self,ogame,id):
         self.id_pl = ogame.get_planet_ids()
         self.fleets = ogame.get_fleets()
-        print(fleets)
-        self.id_pl = ogame.get_planet_ids()
         self.planet_infos = ogame.get_planet_infos(id)
         self.inbuild = self.getInConstruction(ogame,id)
         self.g_res = ogame.get_resources(id)
@@ -22,11 +47,13 @@ class f_ogame():
         self.research = ogame.get_research()
         self.facilities = ogame.get_facilities(id)
         self.ships = ogame.get_ships(id)
+        self.info_fleets = self.fleets_info(ogame)
         try:
             self.isUnderAttack(ogame,id)
         except Exception as ex:
             self.prints("Erreur sur la gestion défense!!")
-        array_infos = [ self.res_build.items(), self.facilities.items(), self.ships.items(), self.inbuild.items() ]  
+        array_infos = [ self.res_build.items(), self.facilities.items(), self.ships.items(),
+         self.inbuild.items() ,  self.info_fleets.items() ]  
         ogame.build(id, Research['Astrophysics'])
         self.globalbuild(ogame,id)
         self.setShips(ogame,id)
@@ -41,9 +68,8 @@ class f_ogame():
         now = datetime.now()
         # dd/mm/YY H:M:S
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        self.info_log.append(dt_string+": "+text)
+        self.info_log.append(dt_string+": "+str(text))
         
-
     def satProduction(self,ogame,id):
         tmax = self.planet_infos['temperature']['max']
         tmin = self.planet_infos['temperature']['min']
@@ -195,5 +221,12 @@ class f_ogame():
         for key,value in array.items():
             if value == int(name):
                 return key
+
+        return None
+
+    def getMission(self,name):
+        for key,value in Missions.items():
+            if value == int(name):
+                return { 'Mission': key }
 
         return None

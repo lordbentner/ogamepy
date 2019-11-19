@@ -11,14 +11,14 @@ class i_ogame():
 
     def gestionAttack(self,ogame,id,gal,sys):
         try:
-            if(getInactivePlanet(ogame,id,gal,sys) == True):
-                getMessage(ogame,id)
+            if(self.getInactivePlanet(ogame,id,gal,sys) == True):
+                self.getMessage(ogame,id)
         except Exception as e:
             coord = "galaxy:"+str(gal)+" system:"+str(sys)
             now = datetime.now()
-            # dd/mm/YY H:M:S
             dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-            self.infoLog.append(dt_string+" "+str(e))
+            print(str(e))
+            self.infoLog.append(dt_string+" -- gestionAttack: "+str(e))
 
     def getInactivePlanet(self,ogame,id,gal,sys):
         galaxy = ogame.galaxy_content(gal, sys)['galaxy']
@@ -29,7 +29,7 @@ class i_ogame():
         for pl in listplanet:
             res = pl.find("td",{"class":"position js_no_action"})
             coord = {'galaxy':gal,'system':sys,'position':int(res.text)}
-            sendSpy(ogame,id,coord)
+            self.sendSpy(ogame,id,coord)
             inactiv_detected = True
         
         return inactiv_detected
@@ -75,4 +75,4 @@ class i_ogame():
                 divlist = li.findAll("span",{"class":'msg_content'})
                 for div in divlist:
                     if "Flottes: 0" in div.text and "Défense: 0" in div.text:
-                        attack(ogame,id,coord,resources)
+                        self.attack(ogame,id,coord,resources)

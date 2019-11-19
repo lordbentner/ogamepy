@@ -1,6 +1,6 @@
 from flask import Flask ,jsonify,render_template
 from ogamebot import Afficheur
-import os
+import os, yaml
 
 HOST_NAME = os.environ.get('OPENSHIFT_APP_DNS', 'localhost')
 APP_NAME = os.environ.get('OPENSHIFT_APP_NAME', 'flask')
@@ -26,13 +26,13 @@ def launch_ogame():
 def hello():
     info = [ thread_1.isConnected,thread_1.isRunning,app.debug ]
     return render_template('index.html',ogame=thread_1.ogame_infos,
-    len=len(thread_1.ogame_infos),research=thread_1.lvl_research,info=info)
+    research=thread_1.lvl_research,info=info)
 
 @app.route('/refresh/')
 def refresh():
     info = [ thread_1.isConnected,thread_1.isRunning,app.debug ]
     return render_template('index.html',ogame=thread_1.ogame_infos,
-    len=len(thread_1.ogame_infos),research=thread_1.lvl_research,info=info)
+    research=thread_1.lvl_research,info=info)
 
 @app.route("/start/")
 def start():
