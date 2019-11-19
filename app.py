@@ -28,23 +28,23 @@ def hello():
     return render_template('index.html',ogame=thread_1.ogame_infos,
     len=len(thread_1.ogame_infos),research=thread_1.lvl_research,info=info)
 
-@app.route('/refresh/', methods=['POST'])
+@app.route('/refresh/')
 def refresh():
     info = [ thread_1.isConnected,thread_1.isRunning,app.debug ]
     return render_template('index.html',ogame=thread_1.ogame_infos,
     len=len(thread_1.ogame_infos),research=thread_1.lvl_research,info=info)
 
-@app.route("/start/", methods=['POST'])
+@app.route("/start/")
 def start():
     thread_1.StartRunning()
     return refresh()
 
-@app.route("/stop/", methods=['POST'])
+@app.route("/stop/")
 def stop():
     thread_1.StopRunning()
     return refresh()
 
-@app.route("/log/",methods=['POST'])
+@app.route("/log/")
 def log():
     return render_template('log.html',info_log=thread_1.info_log,info_log2=thread_1.infoLog2)
 

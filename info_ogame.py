@@ -13,12 +13,12 @@ class i_ogame():
         try:
             if(getInactivePlanet(ogame,id,gal,sys) == True):
                 getMessage(ogame,id)
-        except:
+        except Exception as e:
             coord = "galaxy:"+str(gal)+" system:"+str(sys)
             now = datetime.now()
             # dd/mm/YY H:M:S
             dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-            self.infoLog.append(dt_string+": Flottes deja envoyé: "+coord)
+            self.infoLog.append(dt_string+" "+str(e))
 
     def getInactivePlanet(self,ogame,id,gal,sys):
         galaxy = ogame.galaxy_content(gal, sys)['galaxy']
@@ -41,9 +41,9 @@ class i_ogame():
         resources = { 'deuterium': 0}
         ogame.send_fleet(id_pl, ships, speed, coord, mission, resources)
         now = datetime.now()
-        # dd/mm/YY H:M:S
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        self.infoLog.append(dt_string+": sonde envoyé vers"+coord)
+        str_coord = coord['galaxy']+":"+coord['system']+":"+coord['position']
+        self.infoLog.append(dt_string+" sonde envoyé vers "+str_coord)
 
     def attack(self,ogame,id,co,res):
         nb = round(res/25000)+1
@@ -53,9 +53,9 @@ class i_ogame():
         mission = Missions['Attack']
         ogame.send_fleet(id, ships, speed, where, mission, {})
         now = datetime.now()
-        # dd/mm/YY H:M:S
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        self.infoLog.append(dt_string+": ressources pillables dans"+where)       
+        str_coord = where['galaxy']+":"+where['system']+":"+where['position']
+        self.infoLog.append(dt_string+" ressources pillables dans "+str_coord)       
 
     def getMessage(self,ogame,id):
         messages = ogame.session.get(ogame.get_url('messages&tab=20&ajax=1')).content

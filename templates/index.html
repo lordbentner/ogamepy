@@ -8,36 +8,25 @@
 <title>Ogame Bot</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <form action="/start/" method="post">
-        <button class="btn btn-danger" type="submit">Start</button>
-    </form>
-    <form action="/stop/" method="post">
-        <button class="btn btn-danger" type="submit">Stop</button>
-    </form>
-    </form>
-        <form action="/refresh/" method="post">
-        <button class="btn btn-info btn-lg btn-block" type="submit">Refresh</button>
-    </form>
-    <span class="navbar-text">Etat Connection:
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="{{ url_for('start')}}">Start</a>
+    <a class="navbar-brand" href="{{ url_for('stop')}}">Stop</a>
+    <a class="navbar-brand" href="{{ url_for('refresh')}}">Refresh</a>
+    <nav class="navbar-text">
         {% if info[0] == True %}
-            <div class="green"></div>
+            <div class="p-3 mb-2 bg-secondary text-white"><b>Connection</b></div>
+        {% else %}
+            <div class="p-3 mb-2 bg-danger text-white"><b>Connection</b></span>
         {% endif %}
-        {% if info[0] == False %}
-            <div class="red"></div>
-        {% endif %}
-    </span>
-    <span class="navbar-text">Etat de lancement:
+    </nav>
+    <nav class="navbar-text">
         {% if info[1] == True %}
-            <div class="green"></div>
+            <div class="p-3 mb-2 bg-secondary text-white"><b>Lancement</b></div>
+        {% else %}
+            <div class="p-3 mb-2 bg-danger text-white"><b>Lancement</b></div>
         {% endif %}
-        {% if info[1] == False %}
-            <div class="red"></div>
-        {% endif %}
-    </span>
-        <form action="/log/" method="post">
-        <button class="btn btn-info btn-lg btn-block" type="submit">Log</button>
-    </form>
+    </nav>
+    <a class="btn btn-info btn-lg btn-block" href="{{ url_for('log') }}">Log</a>
 </nav>
 <div class="table-responsive">
     <table class="table table-bordered">
@@ -76,7 +65,7 @@
                  ({{ pl_info["position"] }})
                  <br />
                  {% for key,value in pl_info["resources"]%}
-                    <p>{{key}}:{{value}}</p>
+                    <p>{{key}} : {{value}}</p>
                     {% endfor %}
                 </th>
                 {% for content in pl_info["content"] %}

@@ -14,16 +14,30 @@ class Afficheur(Thread):
         self.isRunning = True
         self.lvl_research = ["",""]  
         self.isConnected = False
-        self.ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
-        self.id_pl = self.ogame.get_planet_ids()
-        self.ogame_infos = [""]*len(self.id_pl)
         self.f_o = f_ogame()
         self.i_o = i_ogame()
         self.info_log = []
         self.infoLog2 = []
 
+    def initOgame(self):
+        try:
+            self.ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
+        except:
+            return self.initOgame()
+
+    def loginOgame(self):
+        try:
+            if self.isConnected == False:
+                self.ogame.login()
+        except:
+            self.ogame.logout()
+            return self.loginOgame()
+
+
+
     def run(self):
         """Code à exécuter pendant l'exécution du thread."""      
+        self.initOgame()
         i = 0
         co_gal = 5
         co_sys = 2 
@@ -31,6 +45,7 @@ class Afficheur(Thread):
             if  self.isRunning == True:
                 try:
                     self.id_pl = self.ogame.get_planet_ids()
+                    self.ogame_infos = [""]*len(self.id_pl)
                     id = self.id_pl[i]
                     pl_info = self.ogame.get_planet_infos(id)
                     co = pl_info["coordinate"]
@@ -42,7 +57,7 @@ class Afficheur(Thread):
                     if co_gal >= 6:
                         co_gal = 1
 
-                    self.f_o.prints(pl_info['planet_name'])
+                    #self.f_o.prints(pl_info['planet_name'])
                     global_res = self.ogame.get_resources(id)
                     og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,"resources":global_res.items(), "content": self.f_o.launch(self.ogame,id) }
                     self.ogame_infos[i] = og_info
@@ -61,19 +76,17 @@ class Afficheur(Thread):
                     self.ogame.logout()
                 except Exception as ex:
                     self.f_o.prints(str(ex))
-            else:
-                self.f_o.prints("not running...")
-                time.sleep(1) 
 
-            if self.isConnected == False:
-                self.ogame.login()
+            self.loginOgame()
             i = i + 1            
             if i >= len(self.id_pl):
                 i = 0
                 time.sleep(1)
 
     def StopRunning(self):
+        self.f_o.prints("Arrêt du bot...")
         self.isRunning = False
 
     def StartRunning(self):
+        self.f_o.prints("Démarrage du bot...")
         self.isRunning = True
