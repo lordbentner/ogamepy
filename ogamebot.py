@@ -74,11 +74,11 @@ class Afficheur(Thread):
                     """except (RuntimeError,ConnectionError):
                         f_o.prints("ExcpetERror!!!!!!")
                         self.isConnected = False"""
-                except Exception as ex:
+                    """except Exception as ex:
                     print(str(ex))
                     self.f_o.prints(str(ex))
                     self.isConnected = False
-                    self.ogame.logout()
+                    self.ogame.logout()"""
 
             else:
                 if self.isConnected == False:
