@@ -16,9 +16,6 @@ class Afficheur(Thread):
         self.isConnected = False
         self.f_o = f_ogame()
         self.i_o = i_ogame()
-        self.ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
-        self.id_pl = self.ogame.get_planet_ids()
-        self.ogame_infos = [""]*len(self.id_pl)
         self.info_log = []
         self.infoLog2 = []
 
@@ -41,7 +38,8 @@ class Afficheur(Thread):
             return self.loginOgame()
 
     def run(self):
-        """Code à exécuter pendant l'exécution du thread."""      
+        """Code à exécuter pendant l'exécution du thread."""
+        self.initOgame()      
         i = 0
         co_gal = 5
         co_sys = 2 
@@ -80,6 +78,7 @@ class Afficheur(Thread):
                     print(str(ex))
                     self.f_o.prints(str(ex))
                     self.isConnected = False
+                    self.ogame.logout()
 
             else:
                 if self.isConnected == False:

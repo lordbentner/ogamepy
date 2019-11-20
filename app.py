@@ -1,6 +1,7 @@
-from flask import Flask ,jsonify,render_template
+from flask import Flask ,jsonify,render_template,request
 from ogamebot import Afficheur
 import os
+from multiprocessing import Process
 
 HOST_NAME = os.environ.get('OPENSHIFT_APP_DNS', 'localhost')
 APP_NAME = os.environ.get('OPENSHIFT_APP_NAME', 'flask')
@@ -47,6 +48,20 @@ def stop():
 @app.route("/log/")
 def log():
     return render_template('log.html',info_log=thread_1.info_log,info_log2=thread_1.infoLog2)
+
+def shutdown_server():
+        func = request.environ.get('werkzeug.server.shutdown')
+        if func is None:
+            raise RuntimeError('Not running with the Werkzeug Server')
+        func()
+
+@app.route("/quit/")
+def quit():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    return refresh()
 
 if __name__ == '__main__':
     launch_ogame()
