@@ -14,6 +14,7 @@ class Afficheur(Thread):
         self.isRunning = True
         self.lvl_research = ["",""]  
         self.isConnected = False
+        self.fleets = []
         self.f_o = f_ogame()
         self.i_o = i_ogame()
         self.info_log = []
@@ -59,8 +60,12 @@ class Afficheur(Thread):
                         co_gal = 1
 
                     print(pl_info['planet_name'])
+                    content = self.f_o.launch(self.ogame,id)
+                    fleets = self.f_o.info_fleets
                     global_res = self.ogame.get_resources(id)
-                    og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,"resources":global_res.items(), "content": self.f_o.launch(self.ogame,id) }
+                    og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,
+                    "resources":global_res.items(),
+                     "content": content , "fleets":fleets }
                     self.ogame_infos[i] = og_info
                     if i!=0:
                         self.f_o.transporter(self.ogame,id)

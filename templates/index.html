@@ -79,8 +79,13 @@
                     {% endfor %}
                     </td>
                 {% endfor %}
-            </tr>    
-            {% endfor %}
+                <td>
+                    {% for fleet in pl_info["fleets"]%}
+                        <p>{{fleet}}</p>
+                    {% endfor %}
+                </td>              
+            </tr>  
+            {% endfor %}               
         </tbody>
     </table>
 </div>

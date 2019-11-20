@@ -20,6 +20,7 @@ class f_ogame():
         coord = ()
         array_fleets = []
         #print(self.fleets)
+        i=0
         for fleet in self.fleets:
             for key,value in fleet['ships'].items():
                 if value > 0:
@@ -31,11 +32,17 @@ class f_ogame():
             mission = self.getMission(fleet['mission'])
             if fleet['origin'] == pos:            
                 coord = {"flotte envoye vers":fleet['destination']}
-                array_fleets.append({"coord":coord,"Mission":mission,"ressources":newres,"flottes":newfleet})
+                arra = {"coord":coord,"Mission":mission,"ressources":newres,"flottes":newfleet}
+                array_fleets.append(arra)
             elif fleet['destination'] == pos:
                 coord = {"flotte envoye depuis":fleet['origin']}
-                array_fleets.append({"coord":coord,"Mission":mission,"ressources":newres,"flottes":newfleet})
+                arra = {"coord":coord,"Mission":mission,"ressources":newres,"flottes":newfleet}
+                array_fleets.append(arra)
+
+            i=i+1
        
+        if len(array_fleets) < 1:
+            array_fleets = {"Mouvement de flotte":"aucune"}
         return array_fleets
 
     def launch(self,ogame,id):
@@ -67,7 +74,6 @@ class f_ogame():
 
     def prints(self,text):
         now = datetime.now()
-        # dd/mm/YY H:M:S
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         self.info_log.append(dt_string+": "+str(text))
         
@@ -137,12 +143,6 @@ class f_ogame():
         ogame.build(id, Research['Astrophysics'])
         if(self.research['energy_technology'] < 12):
             ogame.build(id,Research['EnergyTechnology'])
-        """if(self.research['laser_technology'] < 10):
-            ogame.build(id,Research['LaserTechnology'])
-        if(self.research['ion_technology'] < 5):
-            ogame.build(id,Research['IonTechnology'])
-        if(self.research['plasma_technology'] < 7):
-            ogame.build(id,Research['PlasmaTechnology'])"""
         if(self.research['weapons_technology'] < 3):
             ogame.build(id,Research['WeaponsTechnology'])
         if(self.research['shielding_technology'] < 6):
@@ -170,7 +170,6 @@ class f_ogame():
         where = {'galaxy': coord['galaxy'], 'system': coord['system'], 'position': 16}
         mission = Missions['Expedition']
         ogame.send_fleet(id, ships, speed, where, mission, {})
-        self.prints("envoi expedition vers: "+coord['galaxy']+":"+coord['system']+":16")
 
     def getInConstruction(self,ogame,id):
         incons = ogame.constructions_being_built(id)
@@ -191,6 +190,10 @@ class f_ogame():
             return
 
         self.prints("attaque imminent!!")
+        while i>400:
+            self.prints("builded!!!!!")
+            ogame.build_defense(id,i,self.g_res['metal'])
+            i = i - 1
         ships = [(Ships['LargeCargo'], self.ships['large_cargo'])]
         speed = Speed['100%']
         where = self.coord_plMere
@@ -201,10 +204,6 @@ class f_ogame():
         mission = Missions['Transport']
         resources = { 'deuterium': self.g_res['deuterium']}
         ogame.send_fleet(idpl, ships, speed, where, mission, resources)
-        while i>400:
-            self.prints("builded!!!!!")
-            ogame.build_defense(id,i,self.g_res['metal'])
-            i = i - 1
 
     def get_code(self,name):
         array = {}
