@@ -71,9 +71,9 @@ class Afficheur(Thread):
                     self.isConnected = True
                     self.info_log = self.f_o.info_log
                     self.infoLog2 = self.i_o.infoLog 
-                    """except (RuntimeError,ConnectionError):
-                        f_o.prints("ExcpetERror!!!!!!")
-                        self.isConnected = False"""
+                except (RuntimeError,ConnectionError):
+                    f_o.prints("ExcpetERror!!!!!!")
+                    self.isConnected = False
                     """except Exception as ex:
                     print(str(ex))
                     self.f_o.prints(str(ex))

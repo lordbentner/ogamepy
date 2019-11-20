@@ -17,7 +17,7 @@ class i_ogame():
             coord = "galaxy:"+str(gal)+" system:"+str(sys)
             now = datetime.now()
             dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-            print(str(e))
+            print("expedition"+str(e))
             self.infoLog.append(dt_string+" -- gestionAttack: "+str(e))
 
     def getInactivePlanet(self,ogame,id,gal,sys):

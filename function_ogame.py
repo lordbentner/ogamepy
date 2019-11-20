@@ -19,23 +19,23 @@ class f_ogame():
         newres = []
         coord = ()
         array_fleets = []
+        #print(self.fleets)
         for fleet in self.fleets:
-            for ships in fleet['ships']:
-                if not ships == 0:
-                    newfleet.append(ships)
-            for resource in fleet['resources']:
-                if not resource == 0:
-                    newres.append(resource)
+            for key,value in fleet['ships'].items():
+                if value > 0:
+                    newfleet.append({key:value})
+            for key,value in fleet['resources'].items():
+                if value > 0:
+                    newres.append({key:value})
 
-            mission = self.getMission(fleet['Missions'])
+            mission = self.getMission(fleet['mission'])
             if fleet['origin'] == pos:            
                 coord = {"flotte envoye vers":fleet['destination']}
-                array_fleets.append(coord,newres,newfleet)
+                array_fleets.append({"coord":coord,"Mission":mission,"ressources":newres,"flottes":newfleet})
             elif fleet['destination'] == pos:
                 coord = {"flotte envoye depuis":fleet['origin']}
-                array_fleets.append(coord,mission,newres,newfleet)
+                array_fleets.append({"coord":coord,"Mission":mission,"ressources":newres,"flottes":newfleet})
        
-        print(array_fleets)
         return array_fleets
 
     def launch(self,ogame,id):
@@ -54,7 +54,7 @@ class f_ogame():
         except Exception as ex:
             self.prints("Erreur sur la gestion défense!!")
         array_infos = [ self.res_build.items(), self.facilities.items(), self.ships.items(),
-         self.inbuild.items() ,  self.info_fleets.items() ]  
+         self.inbuild.items() ]  
         ogame.build(id, Research['Astrophysics'])
         self.globalbuild(ogame,id)
         self.setShips(ogame,id)
@@ -228,6 +228,6 @@ class f_ogame():
     def getMission(self,name):
         for key,value in Missions.items():
             if value == int(name):
-                return { 'Mission': key }
+                return key
 
         return None
