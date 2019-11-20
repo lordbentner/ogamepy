@@ -73,16 +73,20 @@ class Afficheur(Thread):
                     self.isConnected = True
                     self.info_log = self.f_o.info_log
                     self.infoLog2 = self.i_o.infoLog 
-                except (RuntimeError,ConnectionError):
-                    f_o.prints("ExcpetERror!!!!!!")
-                    self.isConnected = False
+                    """except (RuntimeError,ConnectionError):
+                        f_o.prints("ExcpetERror!!!!!!")
+                        self.isConnected = False"""
                 except Exception as ex:
                     print(str(ex))
                     self.f_o.prints(str(ex))
+                    self.isConnected = False
 
             else:
                 if self.isConnected == False:
-                    self.ogame.login()
+                    try:
+                        self.ogame.login()
+                    except:
+                        pass
             i = i + 1            
             if i >= len(self.id_pl):
                 i = 0
