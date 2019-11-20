@@ -80,6 +80,9 @@ class Afficheur(Thread):
                     print(str(ex))
                     self.f_o.prints(str(ex))
 
+            else:
+                if self.isConnected == False:
+                    self.ogame.login()
             i = i + 1            
             if i >= len(self.id_pl):
                 i = 0
