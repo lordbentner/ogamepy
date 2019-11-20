@@ -15,10 +15,10 @@ class f_ogame():
         co = self.planet_infos["coordinate"]
         pos = (co["galaxy"],co["system"],co["position"])
         i=0
-        newfleet = {}
-        newres = {}
+        newfleet = []
+        newres = []
         coord = ()
-        array_fleets = {}
+        array_fleets = []
         for fleet in self.fleets:
             for ships in fleet['ships']:
                 if not ships == 0:
@@ -35,6 +35,7 @@ class f_ogame():
                 coord = {"flotte envoye depuis":fleet['origin']}
                 array_fleets.append(coord,mission,newres,newfleet)
        
+        print(array_fleets)
         return array_fleets
 
     def launch(self,ogame,id):
@@ -78,7 +79,7 @@ class f_ogame():
         nbsat = self.g_res['energy']/prodsat
         coutcen = 30*math.pow(1.5,self.res_build['solar_plant']-1)
         if(nbsat*2000 < coutcen):
-            self.prints("build sat")
+            self.prints("build satellite...")
             ogame.build_ships(id,Ships['SolarSatellite'],1)
         else:
             self.prints("building centrale")
