@@ -1,6 +1,6 @@
 from flask import Flask ,jsonify,render_template
 from ogamebot import Afficheur
-import os, yaml
+import os
 
 HOST_NAME = os.environ.get('OPENSHIFT_APP_DNS', 'localhost')
 APP_NAME = os.environ.get('OPENSHIFT_APP_NAME', 'flask')

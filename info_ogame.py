@@ -42,7 +42,7 @@ class i_ogame():
         ogame.send_fleet(id_pl, ships, speed, coord, mission, resources)
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        str_coord = coord['galaxy']+":"+coord['system']+":"+coord['position']
+        str_coord = str(coord['galaxy'])+":"+str(coord['system'])+":"+str(coord['position'])
         self.infoLog.append(dt_string+" sonde envoyé vers "+str_coord)
 
     def attack(self,ogame,id,co,res):
@@ -54,7 +54,7 @@ class i_ogame():
         ogame.send_fleet(id, ships, speed, where, mission, {})
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        str_coord = where['galaxy']+":"+where['system']+":"+where['position']
+        str_coord = str(where['galaxy'])+":"+str(where['system'])+":"+str(where['position'])
         self.infoLog.append(dt_string+" ressources pillables dans "+str_coord)       
 
     def getMessage(self,ogame,id):
