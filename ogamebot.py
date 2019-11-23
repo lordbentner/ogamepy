@@ -1,6 +1,6 @@
 from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
-import time , math,random,sys,requests, info_ogame, os
+import time , math,random,sys,requests, info_ogame, os, linecache, traceback
 from function_ogame import f_ogame
 from info_ogame import i_ogame
 from threading import Thread
@@ -81,8 +81,8 @@ class Afficheur(Thread):
                     self.isConnected = False
                 except Exception as ex:
                     exc_type, exc_obj, exc_tb = sys.exc_info()
-                    fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-                    print(exc_type, fname, exc_tb.tb_lineno)
+                    tb = traceback.extract_tb(exc_tb)[-1]
+                    print(exc_type, tb[2], tb[1])
                     self.f_o.prints(str(ex))
 
             else:

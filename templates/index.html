@@ -9,6 +9,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <b>
     <a class="navbar-brand" href="{{ url_for('start')}}">Start</a>
     <a class="navbar-brand" href="{{ url_for('stop')}}">Stop</a>
     <a class="navbar-brand" href="{{ url_for('refresh')}}">Refresh</a>
@@ -29,10 +30,11 @@
     <a class="navbar-brand" href="{{ url_for('log') }}">Log</a>
     <a class="navbar-brand" href="{{ url_for('flottes') }}">Flottes info</a>
     <a class="btn btn-danger" href="{{ url_for('quit') }}">Quitter</a>
+    </b>
 </nav>
+<h4>niveau des recherches</h4>
 <div class="table-responsive">
     <table class="table table-bordered">
-        <thead class="text-center"><tr><h3>niveau des recherches</h3></tr></thead>
         <tbody>
            <tr>
                 {% for keyz in research[0] %}

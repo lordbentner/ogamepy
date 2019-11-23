@@ -23,12 +23,8 @@ class i_ogame():
         for pl in listplanet:
             res = pl.find("td",{"class":"position js_no_action"})
             coord = {'galaxy':gal,'system':sys,'position':int(res.text)}
-            try:
-                self.sendSpy(ogame,id,coord)
-            except Exception as ex:
-                exc_type, exc_obj, exc_tb = sys.exc_info()
-                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-                print(exc_type, fname, exc_tb.tb_lineno)
+            self.sendSpy(ogame,id,coord)
+
             inactiv_detected = True
         
         return inactiv_detected
@@ -73,6 +69,6 @@ class i_ogame():
                         try:
                             self.attack(ogame,id,coord,resources)
                         except Exception as ex:
-                            exc_type, exc_obj, exc_tb = sys.exc_info()
+                            exc_type, exc_obj, exc_tb = str(sys.exc_info())
                             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
                             print(exc_type, fname, exc_tb.tb_lineno) 
