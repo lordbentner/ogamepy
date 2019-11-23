@@ -25,13 +25,13 @@ def launch_ogame():
 
 @app.route('/')
 def hello():
-    info = [ thread_1.isConnected,thread_1.isRunning,app.debug ]
+    info = [ thread_1.isConnected,thread_1.isRunning]
     return render_template('index.html',ogame=thread_1.ogame_infos,
     research=thread_1.lvl_research,info=info)
 
 @app.route('/refresh/')
 def refresh():
-    info = [ thread_1.isConnected,thread_1.isRunning,app.debug ]
+    info = [ thread_1.isConnected,thread_1.isRunning]
     return render_template('index.html',ogame=thread_1.ogame_infos,
     research=thread_1.lvl_research,info=info)
 
@@ -48,6 +48,10 @@ def stop():
 @app.route("/log/")
 def log():
     return render_template('log.html',info_log=thread_1.info_log,info_log2=thread_1.infoLog2)
+
+@app.route("/flottes/")
+def flottes():
+    return render_template('flottes.html',flottes=thread_1.fleets)
 
 def shutdown_server():
         func = request.environ.get('werkzeug.server.shutdown')

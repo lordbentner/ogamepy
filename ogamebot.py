@@ -1,6 +1,6 @@
 from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
-import time , math,random,sys,requests, info_ogame
+import time , math,random,sys,requests, info_ogame, os
 from function_ogame import f_ogame
 from info_ogame import i_ogame
 from threading import Thread
@@ -61,11 +61,11 @@ class Afficheur(Thread):
 
                     print(pl_info['planet_name'])
                     content = self.f_o.launch(self.ogame,id)
-                    fleets = self.f_o.info_fleets
+                    self.fleets = self.f_o.fleets
                     global_res = self.ogame.get_resources(id)
                     og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,
                     "resources":global_res.items(),
-                     "content": content , "fleets":fleets }
+                     "content": content }
                     self.ogame_infos[i] = og_info
                     if i!=0:
                         self.f_o.transporter(self.ogame,id)
@@ -80,6 +80,9 @@ class Afficheur(Thread):
                     f_o.prints("ExcpetERror!!!!!!")
                     self.isConnected = False
                 except Exception as ex:
+                    exc_type, exc_obj, exc_tb = sys.exc_info()
+                    fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                    print(exc_type, fname, exc_tb.tb_lineno)
                     self.f_o.prints(str(ex))
 
             else:

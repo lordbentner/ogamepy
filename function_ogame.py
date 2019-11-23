@@ -10,41 +10,6 @@ class f_ogame():
         self.info_log = [""]
         self.coord_plMere = {'galaxy':1,'system':30,'position':6 }
 
-    def fleets_info(self,ogame):
-        self.fleets = ogame.get_fleets()
-        co = self.planet_infos["coordinate"]
-        pos = (co["galaxy"],co["system"],co["position"])
-        i=0
-        newfleet = []
-        newres = []
-        coord = ()
-        array_fleets = []
-        #print(self.fleets)
-        i=0
-        for fleet in self.fleets:
-            for key,value in fleet['ships'].items():
-                if value > 0:
-                    newfleet.append({key:value})
-            for key,value in fleet['resources'].items():
-                if value > 0:
-                    newres.append({key:value})
-
-            mission = self.getMission(fleet['mission'])
-            if fleet['origin'] == pos:            
-                coord = {"flotte envoye vers":fleet['destination']}
-                arra = {"coord":coord,"Mission":mission,"ressources":newres,"flottes":newfleet}
-                array_fleets.append(arra)
-            elif fleet['destination'] == pos:
-                coord = {"flotte envoye depuis":fleet['origin']}
-                arra = {"coord":coord,"Mission":mission,"ressources":newres,"flottes":newfleet}
-                array_fleets.append(arra)
-
-            i=i+1
-       
-        if len(array_fleets) < 1:
-            array_fleets = {"Mouvement de flotte":"aucune"}
-        return array_fleets
-
     def launch(self,ogame,id):
         self.id_pl = ogame.get_planet_ids()
         self.fleets = ogame.get_fleets()
@@ -55,7 +20,6 @@ class f_ogame():
         self.research = ogame.get_research()
         self.facilities = ogame.get_facilities(id)
         self.ships = ogame.get_ships(id)
-        self.info_fleets = self.fleets_info(ogame)
         try:
             self.isUnderAttack(ogame,id)
         except Exception as ex:

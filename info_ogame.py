@@ -1,6 +1,6 @@
 from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
-import time , math
+import time , math, os
 from bs4 import BeautifulSoup
 from datetime import datetime
 
@@ -13,12 +13,6 @@ class i_ogame():
         #try:
         if(self.getInactivePlanet(ogame,id,gal,sys) == True):
             self.getMessage(ogame,id)
-        """except Exception as e:
-            coord = "galaxy:"+str(gal)+" system:"+str(sys)
-            now = datetime.now()
-            dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-            print(str(e))
-            self.infoLog.append(dt_string+" -- gestionAttack: "+str(e))"""
 
     def getInactivePlanet(self,ogame,id,gal,sys):
         galaxy = ogame.galaxy_content(gal, sys)['galaxy']
@@ -31,8 +25,10 @@ class i_ogame():
             coord = {'galaxy':gal,'system':sys,'position':int(res.text)}
             try:
                 self.sendSpy(ogame,id,coord)
-            except:
-                pass
+            except Exception as ex:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                print(exc_type, fname, exc_tb.tb_lineno)
             inactiv_detected = True
         
         return inactiv_detected
@@ -62,14 +58,21 @@ class i_ogame():
                 coord = span.text.split('[')[1].replace(']','').split(':')
                 reslist = li.findAll("span",{"class":"resspan"})
                 for res in reslist:
+                    res.replace("Métal: ","").replace("Cristal: ","").replace("Deutérium: ","")
                     if "," in res:
-                        resources = resources + 1000*int(res.text.replace(",","").replace("Métal: ","").replace("Cristal: ","").replace("Deutérium: ","").replace("M",""))
+                        print(res)
+                        resources = resources + 1000*int(res.text.replace(",","").replace("M",""))
                     else:
-                        resources  = resources + int(res.text.replace(".","").replace("Métal: ","").replace("Cristal: ","").replace("Deutérium: ",""))
+                        resources  = resources + int(res.text.replace(".",""))
                 
                 if resources < 100000:
                     return
                 divlist = li.findAll("span",{"class":'msg_content'})
                 for div in divlist:
                     if "Flottes: 0" in div.text and "Défense: 0" in div.text:
-                        self.attack(ogame,id,coord,resources)
+                        try:
+                            self.attack(ogame,id,coord,resources)
+                        except Exception as ex:
+                            exc_type, exc_obj, exc_tb = sys.exc_info()
+                            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                            print(exc_type, fname, exc_tb.tb_lineno) 
