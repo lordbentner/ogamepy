@@ -9,6 +9,7 @@
 </head>
 <body>
 <h1 class="text-center">Mouvement de flottes</h1>
+<a class="btn btn-primary btn-lg btn-block" href="{{ url_for('hello') }}">Retour</a>
 <div class="card">
     <table class="table table-bordered table-dark">
         <thead>
@@ -23,7 +24,17 @@
             <tr>
                 {% for key,value in flotte.items() %}
                 <td>
+                    {% set key_f = key %}
+                    {% set value_f = value %}
+                    {% if key_f == "mission" %}
+                        {% for key,value in missions_list %}
+                            {% if value == value_f %}
+                                {{ key }}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
                     {{ value }}
+                    {% endif %}
                 </td>
                 {% endfor %}
             </tr>

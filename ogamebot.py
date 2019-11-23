@@ -42,8 +42,8 @@ class Afficheur(Thread):
         """Code à exécuter pendant l'exécution du thread."""
         self.initOgame()      
         i = 0
-        co_gal = 5
-        co_sys = 2 
+        co_gal = 2
+        co_sys = 1 
         while True:       
             if  self.isRunning == True:
                 try:

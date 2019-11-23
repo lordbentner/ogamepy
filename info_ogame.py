@@ -1,6 +1,6 @@
 from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
-import time , math, os
+import time , math, os, sys
 from bs4 import BeautifulSoup
 from datetime import datetime
 
@@ -54,13 +54,15 @@ class i_ogame():
                 coord = span.text.split('[')[1].replace(']','').split(':')
                 reslist = li.findAll("span",{"class":"resspan"})
                 for res in reslist:
-                    res.replace("Métal: ","").replace("Cristal: ","").replace("Deutérium: ","")
-                    if "," in res:
-                        print(res)
-                        resources = resources + 1000*int(res.text.replace(",","").replace("M",""))
+                    print("ressources:"+str(res.text))
+                    ress = str(res.text).replace("Métal: ","").replace("Cristal: ","").replace("Deutérium: ","")
+                    if "," in ress:
+                        print(ress)
+                        resources = resources + 1000*int(ress.replace(",","").replace("M",""))
                     else:
-                        resources  = resources + int(res.text.replace(".",""))
+                        resources  = resources + int(ress.replace(".",""))
                 
+                print(resources)
                 if resources < 100000:
                     return
                 divlist = li.findAll("span",{"class":'msg_content'})

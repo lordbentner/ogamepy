@@ -31,8 +31,8 @@ class f_ogame():
         self.setShips(ogame,id)
         try :
             self.setExpedition(ogame,id)
-        except:
-            pass    
+        except Exception as ex:
+            print("expedition erreur:"+str(ex))    
 
         return array_infos
 
@@ -88,6 +88,9 @@ class f_ogame():
         if(self.facilities['shipyard'] < 8):
             ogame.build(id,Facilities['Shipyard'])
 
+        if(self.facilities['space_dock'] < 7):
+            ogame.build(id,Facilities['SpaceDock'])
+
     def transporter(self,ogame,id):
         try:
             if(self.g_res['deuterium'] > 400000):
@@ -128,7 +131,7 @@ class f_ogame():
         sh = ogame.get_ships(id)
         pl_infos  = ogame.get_planet_infos(id)
         coord = pl_infos['coordinate']
-        ships = [(203, 30) , (210,5) ,(202,sh['small_cargo ']), (204,sh['light_fighter']),(205,sh['heavy_fighter']),
+        ships = [(203, 30) , (210,5) ,(202,sh['small_cargo']), (204,sh['light_fighter']),(205,sh['heavy_fighter']),
         (206,sh['cruiser']),(207,sh['battleship']),(213,sh['destroyer'])]
         speed = Speed['100%']
         where = {'galaxy': coord['galaxy'], 'system': coord['system'], 'position': 16}

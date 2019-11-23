@@ -1,5 +1,6 @@
 from flask import Flask ,jsonify,render_template,request
 from ogamebot import Afficheur
+from ogame.constants import Missions
 import os
 from multiprocessing import Process
 
@@ -51,7 +52,7 @@ def log():
 
 @app.route("/flottes/")
 def flottes():
-    return render_template('flottes.html',flottes=thread_1.fleets)
+    return render_template('flottes.html',flottes=thread_1.fleets ,missions_list=Missions.items())
 
 def shutdown_server():
         func = request.environ.get('werkzeug.server.shutdown')
