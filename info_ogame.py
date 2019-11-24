@@ -10,9 +10,28 @@ class i_ogame():
         self.infoLog = []
 
     def gestionAttack(self,ogame,id,gal,sys):
-        #try:
+        #self.getDebris(ogame)
         if(self.getInactivePlanet(ogame,id,gal,sys) == True):
             self.getMessage(ogame,id)
+
+
+    def getDebris(self,ogame):
+        gal = 1
+        sys = 1
+        while(gal < 7):
+            sys = 1
+            while(sys < 500):
+                galaxy = ogame.galaxy_content(gal, sys)['galaxy']
+                soup = BeautifulSoup(galaxy,'html.parser')
+                listdebris = soup.find_all("li",{"class":"debris-recyclers"})
+                #listdebris = soup.find_all("tr")
+                coord_debris = {}
+                for debris in listdebris:
+                    print(debris.replace("Recycleurs nécessaires: ",""))
+
+                sys = sys+1
+            gal = gal + 1
+
 
     def getInactivePlanet(self,ogame,id,gal,sys):
         galaxy = ogame.galaxy_content(gal, sys)['galaxy']
@@ -71,6 +90,7 @@ class i_ogame():
                         try:
                             self.attack(ogame,id,coord,resources)
                         except Exception as ex:
-                            exc_type, exc_obj, exc_tb = str(sys.exc_info())
-                            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-                            print(exc_type, fname, exc_tb.tb_lineno) 
+                            #exc_type, exc_obj, exc_tb = str(sys.exc_info())
+                            #fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                            #print(exc_type, fname, exc_tb.tb_lineno)
+                            print("getMessage:"+str(ex)) 
