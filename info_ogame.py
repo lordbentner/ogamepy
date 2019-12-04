@@ -14,7 +14,6 @@ class i_ogame():
         if(self.getInactivePlanet(ogame,id,gal,sys) == True):
             self.getMessage(ogame,id)
 
-
     def getDebris(self,ogame):
         gal = 1
         sys = 1
@@ -32,7 +31,6 @@ class i_ogame():
                 sys = sys+1
             gal = gal + 1
 
-
     def getInactivePlanet(self,ogame,id,gal,sys):
         galaxy = ogame.galaxy_content(gal, sys)['galaxy']
         soup = BeautifulSoup(galaxy,'html.parser')
@@ -49,7 +47,7 @@ class i_ogame():
         return inactiv_detected
 
     def sendSpy(self,ogame,id_pl,coord):
-        ships = [(Ships['EspionageProbe'],15)]
+        ships = [(Ships['EspionageProbe'],25)]
         speed = Speed['100%']
         mission = Missions['Spy']
         ogame.send_fleet(id_pl, ships, speed, coord, mission, {})
