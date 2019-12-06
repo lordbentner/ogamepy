@@ -52,6 +52,7 @@ class Afficheur(Thread):
                     pl_info = self.ogame.get_planet_infos(id)
                     co = pl_info["coordinate"]
                     pos = str(co["galaxy"])+":"+str(co["system"])+":"+str(co["position"])
+                    research = self.ogame.get_research()
                     co_sys = co_sys+1
                     if co_sys >= 500:
                         co_sys = 1
@@ -67,7 +68,8 @@ class Afficheur(Thread):
                     "resources":global_res.items(),
                      "content": content }
                     self.ogame_infos[i] = og_info
-                    if i!=0:
+                    print("inter:"+str(research['intergalactic_research_network']))
+                    if i>research['intergalactic_research_network']:
                         self.f_o.transporter(self.ogame,id)
                     else:
                         self.lvl_research = self.f_o.setResearch(self.ogame,id)
@@ -82,8 +84,9 @@ class Afficheur(Thread):
                 except Exception as ex:
                     exc_type, exc_obj, exc_tb = sys.exc_info()
                     tb = traceback.extract_tb(exc_tb)[-1]
-                    print(exc_type, tb[2], tb[1])
-                    self.f_o.prints(str(ex))
+                    if not "None" in str(ex):
+                        print(exc_type, tb[2], tb[1])
+                        self.f_o.prints(str(ex))
 
             else:
                 if self.isConnected == False:

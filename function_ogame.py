@@ -118,6 +118,7 @@ class f_ogame():
         ogame.build(id,Research['EspionageTechnology'])
         ogame.build(id,Research['ArmourTechnology'])
         ogame.build(id,Research['CombustionDrive'])
+        ogame.build(id,Research['IntergalacticResearchNetwork'])
         res = self.research.items()
         newkey = []
         newvalues = []
