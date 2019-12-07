@@ -60,6 +60,7 @@ class Afficheur(Thread):
                     if co_gal >= 6:
                         co_gal = 1
 
+#<a href="https://s153-fr.ogame.gameforge.com/game/index.php?page=repairlayer&amp;component=repairlayer" class="overlay tooltipHTML js_hideTipOnMobile" data-overlay-class="repairlayer" data-overlay-width="656px" data-overlay-title="Épave" title=""></a>
                     print(pl_info['planet_name'])
                     content = self.f_o.launch(self.ogame,id)
                     self.fleets = self.f_o.fleets
@@ -101,8 +102,10 @@ class Afficheur(Thread):
 
     def StopRunning(self):
         self.f_o.prints("Arrêt du bot...")
+        self.ogame.logout()
         self.isRunning = False
 
     def StartRunning(self):
         self.f_o.prints("Démarrage du bot...")
+        self.ogame.login()
         self.isRunning = True
