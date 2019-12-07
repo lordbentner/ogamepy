@@ -69,5 +69,5 @@ def quit():
     return refresh()
 
 if __name__ == '__main__':
-    launch_ogame()
-    app.run(use_reloader = True,host=IP,port=PORT,debug=True)
+    #launch_ogame()
+    #app.run(use_reloader = True,host=IP,port=PORT,debug=True)
