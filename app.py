@@ -15,7 +15,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 if("opt" in dir_path):
     IP='0.0.0.0'
 
-#app = Flask(__name__)
+app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 thread_1 = Afficheur()
 
@@ -69,5 +69,5 @@ def quit():
     return refresh()
 
 if __name__ == '__main__':
-    #launch_ogame()
-    #app.run(use_reloader = True,host=IP,port=PORT,debug=True)
+    launch_ogame()
+    app.run(use_reloader = True,host=IP,port=PORT,debug=True)
