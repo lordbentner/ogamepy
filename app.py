@@ -1,7 +1,7 @@
 from flask import Flask ,jsonify,render_template,request
 from ogamebot import Afficheur
 from ogame.constants import Missions
-import os
+import os, sys
 from multiprocessing import Process
 
 HOST_NAME = os.environ.get('OPENSHIFT_APP_DNS', 'localhost')

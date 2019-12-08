@@ -93,7 +93,7 @@ class f_ogame():
 
     def transporter(self,ogame,id):
         try:
-            if(self.g_res['deuterium'] > 400000):
+            if(self.g_res['deuterium'] > (100000*self.facilities['terraformer'])+100000):
                 ships = [(Ships['LargeCargo'], 5)]
                 speed = Speed['100%']
                 where = {'galaxy': 1, 'system': 30, 'position': 6}

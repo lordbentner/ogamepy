@@ -88,7 +88,4 @@ class i_ogame():
                         try:
                             self.attack(ogame,id,coord,resources)
                         except Exception as ex:
-                            #exc_type, exc_obj, exc_tb = str(sys.exc_info())
-                            #fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-                            #print(exc_type, fname, exc_tb.tb_lineno)
                             print("getMessage:"+str(ex)) 

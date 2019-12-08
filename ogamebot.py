@@ -22,7 +22,15 @@ class Afficheur(Thread):
 
     def initOgame(self):
         try:
-            self.ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
+            univers = 'Aquarius'
+            user = "nemesism@hotmail.fr"
+            mdp = "pencilcho44"
+            if len(sys.argv) > 1:
+                univers  = sys.argv[0]
+                user  = sys.argv[1]
+                mdp = sys.argv[2]
+
+            self.ogame = OGame(univers, user, mdp)
             self.id_pl = self.ogame.get_planet_ids()
             self.ogame_infos = [""]*len(self.id_pl)
             print("Connexion réussi")
