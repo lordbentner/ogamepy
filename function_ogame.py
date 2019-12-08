@@ -2,7 +2,7 @@ from ogame import OGame
 from ogame.constants import Ships, Speed, Missions, Buildings, Research, Defense , Facilities
 import time , math
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime , timedelta
 
 class f_ogame():
 
@@ -143,13 +143,22 @@ class f_ogame():
         incons = ogame.constructions_being_built(id)
         res = {}
         i=1
-        for con in incons: 
+        """for con in incons: 
             inbuild =  self.get_code(con)
             if not inbuild == None:
                 keyz = str(i)+'-'
                 res[keyz] = inbuild
                 i=i+1
+        """
 
+
+        print(incons[3])
+        if incons[0] > 0:
+            time = str(timedelta(seconds=int(incons[1])))
+            res["1-"] = self.get_code(incons[0])+"("+time+")"
+
+        time2 = str(timedelta(seconds=int(incons[3])))
+        res["2-"] = self.get_code(incons[2])+"("+time2+")"
         return res
        
     def isUnderAttack(self,ogame,id):

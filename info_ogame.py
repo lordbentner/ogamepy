@@ -47,7 +47,7 @@ class i_ogame():
         return inactiv_detected
 
     def sendSpy(self,ogame,id_pl,coord):
-        ships = [(Ships['EspionageProbe'],25)]
+        ships = [(Ships['EspionageProbe'],30)]
         speed = Speed['100%']
         mission = Missions['Spy']
         ogame.send_fleet(id_pl, ships, speed, coord, mission, {})

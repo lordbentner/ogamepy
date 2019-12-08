@@ -77,7 +77,6 @@ class Afficheur(Thread):
                     "resources":global_res.items(),
                      "content": content }
                     self.ogame_infos[i] = og_info
-                    print("inter:"+str(research['intergalactic_research_network']))
                     if i>research['intergalactic_research_network']:
                         self.f_o.transporter(self.ogame,id)
                         self.i_o.gestionAttack(self.ogame,id,co_gal,co_sys)
