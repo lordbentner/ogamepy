@@ -162,7 +162,7 @@ class f_ogame():
             self.prints("builded!!!!!")
             ogame.build_defense(id,i,self.g_res['metal'])
             i = i - 1
-        ships = [(Ships['LargeCargo'], self.ships['large_cargo'])]
+        ships = [(Ships['LargeCargo'], self.ships['large_cargo']),(Ships['SmallCargo'], self.ships['small_cargo'])]
         speed = Speed['100%']
         where = self.coord_plMere
         idpl = id

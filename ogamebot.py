@@ -80,10 +80,10 @@ class Afficheur(Thread):
                     print("inter:"+str(research['intergalactic_research_network']))
                     if i>research['intergalactic_research_network']:
                         self.f_o.transporter(self.ogame,id)
+                        self.i_o.gestionAttack(self.ogame,id,co_gal,co_sys)
                     else:
                         self.lvl_research = self.f_o.setResearch(self.ogame,id)
                     
-                    self.i_o.gestionAttack(self.ogame,id,co_gal,co_sys)
                     self.isConnected = True
                     self.info_log = self.f_o.info_log
                     self.infoLog2 = self.i_o.infoLog 
