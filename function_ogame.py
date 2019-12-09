@@ -145,7 +145,7 @@ class f_ogame():
         incons = ogame.constructions_being_built(id)
         res = {}
         i=1
-        if incons[0] > 0:
+        if int(incons[0]) > 0:
             time = str(timedelta(seconds=int(incons[1])))
             res["1-"] = self.get_code(incons[0])+"("+time+")"
 
