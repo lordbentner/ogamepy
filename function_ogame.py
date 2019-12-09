@@ -26,8 +26,6 @@ class f_ogame():
             self.prints("Erreur sur la gestion défense!!")
         array_infos = [ self.res_build.items(), self.facilities.items(), self.ships.items(),
          self.inbuild.items() ]
-        ogame.build(id,Research['IntergalacticResearchNetwork'])  
-        ogame.build(id, Research['Astrophysics'])
         self.globalbuild(ogame,id)
         self.setShips(ogame,id)
         try :
@@ -108,6 +106,7 @@ class f_ogame():
     def setResearch(self,ogame,id):
         if(self.facilities['research_lab'] < 12):
             ogame.build(id,Facilities['ResearchLab'])
+        ogame.build(id,Research['IntergalacticResearchNetwork'])  
         ogame.build(id, Research['Astrophysics'])
         if(self.research['energy_technology'] < 12):
             ogame.build(id,Research['EnergyTechnology'])
