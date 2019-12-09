@@ -25,7 +25,8 @@ class f_ogame():
         except Exception as ex:
             self.prints("Erreur sur la gestion défense!!")
         array_infos = [ self.res_build.items(), self.facilities.items(), self.ships.items(),
-         self.inbuild.items() ]  
+         self.inbuild.items() ]
+        ogame.build(id,Research['IntergalacticResearchNetwork'])  
         ogame.build(id, Research['Astrophysics'])
         self.globalbuild(ogame,id)
         self.setShips(ogame,id)
@@ -118,7 +119,6 @@ class f_ogame():
         ogame.build(id,Research['EspionageTechnology'])
         ogame.build(id,Research['ArmourTechnology'])
         ogame.build(id,Research['CombustionDrive'])
-        ogame.build(id,Research['IntergalacticResearchNetwork'])
         res = self.research.items()
         newkey = []
         newvalues = []
@@ -143,16 +143,6 @@ class f_ogame():
         incons = ogame.constructions_being_built(id)
         res = {}
         i=1
-        """for con in incons: 
-            inbuild =  self.get_code(con)
-            if not inbuild == None:
-                keyz = str(i)+'-'
-                res[keyz] = inbuild
-                i=i+1
-        """
-
-
-        print(incons[3])
         if incons[0] > 0:
             time = str(timedelta(seconds=int(incons[1])))
             res["1-"] = self.get_code(incons[0])+"("+time+")"
