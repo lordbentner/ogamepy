@@ -105,14 +105,11 @@ class Afficheur(Thread):
             i = i + 1            
             if i >= len(self.id_pl):
                 i = 0
-                time.sleep(1)
 
     def StopRunning(self):
         self.f_o.prints("Arrêt du bot...")
-        self.ogame.logout()
         self.isRunning = False
 
     def StartRunning(self):
         self.f_o.prints("Démarrage du bot...")
-        self.ogame.login()
         self.isRunning = True
