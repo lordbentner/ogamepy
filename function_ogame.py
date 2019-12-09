@@ -114,8 +114,8 @@ class f_ogame():
             ogame.build(id,Research['WeaponsTechnology'])
         if(self.research['shielding_technology'] < 6):
             ogame.build(id,Research['ShieldingTechnology'])
-        #if(self.research['hyperspace_technology'] < 8):
-        #    ogame.build(id,Research['HyperspaceTechnology'])
+        if(self.research['hyperspace_technology'] < 8):
+            ogame.build(id,Research['HyperspaceTechnology'])
 
         ogame.build(id,Research['EspionageTechnology'])
         ogame.build(id,Research['ArmourTechnology'])
@@ -148,8 +148,9 @@ class f_ogame():
             time = str(timedelta(seconds=int(incons[1])))
             res["1-"] = self.get_code(incons[0])+"("+time+")"
 
-        time2 = str(timedelta(seconds=int(incons[3])))
-        res["2-"] = self.get_code(incons[2])+"("+time2+")"
+        if int(incons[2] > 0):
+            time2 = str(timedelta(seconds=int(incons[3])))
+            res["2-"] = self.get_code(incons[2])+"("+time2+")"
         return res
        
     def isUnderAttack(self,ogame,id):

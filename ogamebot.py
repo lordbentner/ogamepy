@@ -22,15 +22,7 @@ class Afficheur(Thread):
 
     def initOgame(self):
         try:
-            univers = 'Aquarius'
-            user = "nemesism@hotmail.fr"
-            mdp = "pencilcho44"
-            if len(sys.argv) > 1:
-                univers  = sys.argv[0]
-                user  = sys.argv[1]
-                mdp = sys.argv[2]
-
-            self.ogame = OGame(univers, user, mdp)
+            self.ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
             self.id_pl = self.ogame.get_planet_ids()
             self.ogame_infos = [""]*len(self.id_pl)
             print("Connexion réussi")
@@ -92,9 +84,9 @@ class Afficheur(Thread):
                 except Exception as ex:
                     exc_type, exc_obj, exc_tb = sys.exc_info()
                     tb = traceback.extract_tb(exc_tb)[-1]
-                    if not "None" in str(ex):
-                        print(exc_type, tb[2], tb[1])
-                        self.f_o.prints(str(ex))
+                    #if not "None" in str(ex):
+                    print(exc_type, tb[2], tb[1])
+                    self.f_o.prints(str(ex))
 
             else:
                 if self.isConnected == False:
