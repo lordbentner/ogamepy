@@ -114,8 +114,8 @@ class f_ogame():
             ogame.build(id,Research['WeaponsTechnology'])
         if(self.research['shielding_technology'] < 6):
             ogame.build(id,Research['ShieldingTechnology'])
-        if(self.research['hyperspace_technology'] < 8):
-            ogame.build(id,Research['HyperspaceTechnology'])
+        #if(self.research['hyperspace_technology'] < 8):
+        #    ogame.build(id,Research['HyperspaceTechnology'])
 
         ogame.build(id,Research['EspionageTechnology'])
         ogame.build(id,Research['ArmourTechnology'])
