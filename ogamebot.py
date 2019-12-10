@@ -71,9 +71,11 @@ class Afficheur(Thread):
                     self.ogame_infos[i] = og_info
                     if i>research['intergalactic_research_network']:
                         self.f_o.transporter(self.ogame,id)
-                        self.i_o.gestionAttack(self.ogame,id,co_gal,co_sys)
                     else:
                         self.lvl_research = self.f_o.setResearch(self.ogame,id)
+
+                    if i>0:
+                        self.i_o.gestionAttack(self.ogame,id,co_gal,co_sys)
                     
                     self.isConnected = True
                     self.info_log = self.f_o.info_log
