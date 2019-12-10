@@ -148,7 +148,7 @@ class f_ogame():
             time = str(timedelta(seconds=int(incons[1])))
             res["1-"] = self.get_code(incons[0])+"("+time+")"
 
-        if int(incons[2] > 0):
+        if int(incons[2]) > 0:
             time2 = str(timedelta(seconds=int(incons[3])))
             res["2-"] = self.get_code(incons[2])+"("+time2+")"
         return res
