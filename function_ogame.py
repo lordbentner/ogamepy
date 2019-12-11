@@ -8,7 +8,7 @@ class f_ogame():
 
     def __init__(self):
         self.info_log = [""]
-        self.coord_plMere = {'galaxy':1,'system':30,'position':6 }
+        self.coord_plMere = {'galaxy':1,'system':150,'position':7 }
 
     def launch(self,ogame,id):
         self.id_pl = ogame.get_planet_ids()
@@ -95,7 +95,7 @@ class f_ogame():
             if(self.g_res['deuterium'] > (100000*self.facilities['terraformer'])+100000):
                 ships = [(Ships['LargeCargo'], 5)]
                 speed = Speed['100%']
-                where = {'galaxy': 1, 'system': 30, 'position': 6}
+                where = {'galaxy': 1, 'system': 150, 'position': 7}
                 mission = Missions['Transport']
                 resources = { 'deuterium': 100000}
                 ogame.send_fleet(id, ships, speed, where, mission, resources)
