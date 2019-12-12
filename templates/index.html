@@ -50,6 +50,18 @@
         </tbody>
     </table>
 </div>
+<table class="table table-bordered table-danger">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">Recherche en cours</th>
+            <th scope="col" class="text-center">Système ciblé par les sondes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>{% for key,value in info[2] %} {{key}} : {{value}}{% endfor %}</td>
+        <td>{{ info[3] }} : {{info[4]}} , nombre d'inactifs sans défense : {{info[5]}}  </td>
+    </tbody>
+</table>
 <div class="card">
     <table class="table table-bordered table-dark">
         <thead>

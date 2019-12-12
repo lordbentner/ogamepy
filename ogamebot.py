@@ -42,8 +42,8 @@ class Afficheur(Thread):
         """Code à exécuter pendant l'exécution du thread."""
         self.initOgame()      
         i = 0
-        co_gal = 2
-        co_sys = 1 
+        self.co_gal = 1
+        self.co_sys = 1 
         while True:       
             if  self.isRunning == True:
                 try:
@@ -53,12 +53,12 @@ class Afficheur(Thread):
                     co = pl_info["coordinate"]
                     pos = str(co["galaxy"])+":"+str(co["system"])+":"+str(co["position"])
                     research = self.ogame.get_research()
-                    co_sys = co_sys+1
-                    if co_sys >= 500:
-                        co_sys = 1
-                        co_gal = co_gal+1
-                    if co_gal >= 6:
-                        co_gal = 1
+                    self.co_sys = self.co_sys+1
+                    if self.co_sys >= 500:
+                        self.co_sys = 1
+                        self.co_gal = self.co_gal+1
+                    if self.co_gal >= 6:
+                        self.co_gal = 1
 
 #<a href="https://s153-fr.ogame.gameforge.com/game/index.php?page=repairlayer&amp;component=repairlayer" class="overlay tooltipHTML js_hideTipOnMobile" data-overlay-class="repairlayer" data-overlay-width="656px" data-overlay-title="Épave" title=""></a>
                     print(pl_info['planet_name'])
@@ -75,7 +75,9 @@ class Afficheur(Thread):
                         self.lvl_research = self.f_o.setResearch(self.ogame,id)
 
                     if i>0:
-                        self.i_o.gestionAttack(self.ogame,id,co_gal,co_sys)
+                        self.i_o.gestionAttack(self.ogame,id,self.co_gal,self.co_sys)
+                        self.f_o.prints("Nombre d'inactif sur le système "
+                        +self.co_gal+":"+self.co_sys+":"+self.i_o.nbmessage)
                     
                     self.isConnected = True
                     self.info_log = self.f_o.info_log
@@ -86,9 +88,9 @@ class Afficheur(Thread):
                 except Exception as ex:
                     exc_type, exc_obj, exc_tb = sys.exc_info()
                     tb = traceback.extract_tb(exc_tb)[-1]
-                    #if not "None" in str(ex):
-                    print(exc_type, tb[2], tb[1])
-                    self.f_o.prints(str(ex))
+                    if not "None" in str(ex):
+                        print(exc_type, tb[2], tb[1])
+                        self.f_o.prints(str(ex))
 
             else:
                 if self.isConnected == False:

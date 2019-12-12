@@ -7,12 +7,13 @@ from datetime import datetime
 class i_ogame():
 
     def __init__(self):
-        self.infoLog = []
+        self.infoLog = ""
+        self.nbmessage = 0
 
     def gestionAttack(self,ogame,id,gal,sys):
         #self.getDebris(ogame)
         if(self.getInactivePlanet(ogame,id,gal,sys) == True):
-            self.getMessage(ogame,id)
+           self.getMessage(ogame,id)
 
     def getDebris(self,ogame):
         gal = 1
@@ -36,12 +37,14 @@ class i_ogame():
         soup = BeautifulSoup(galaxy,'html.parser')
         listplanet = soup.find_all("tr",{"class":"row inactive_filter"})
         coord_inactive = {}
+        self.nbmessage = 0
         inactiv_detected = False
         for pl in listplanet:
             res = pl.find("td",{"class":"position js_no_action"})
             coord = {'galaxy':gal,'system':sys,'position':int(res.text)}
             self.sendSpy(ogame,id,coord)
-
+            self.nbmessage = self.nbmessage + 1
+            
             inactiv_detected = True
         
         return inactiv_detected

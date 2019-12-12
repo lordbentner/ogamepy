@@ -9,6 +9,7 @@ class f_ogame():
     def __init__(self):
         self.info_log = [""]
         self.coord_plMere = {'galaxy':1,'system':150,'position':7 }
+        self.inResearch = {}
 
     def launch(self,ogame,id):
         self.id_pl = ogame.get_planet_ids()
@@ -143,14 +144,15 @@ class f_ogame():
     def getInConstruction(self,ogame,id):
         incons = ogame.constructions_being_built(id)
         res = {}
-        i=1
         if int(incons[0]) > 0:
             time = str(timedelta(seconds=int(incons[1])))
-            res["1-"] = self.get_code(incons[0])+"("+time+")"
+            res[self.get_code(incons[0])] = time
 
         if int(incons[2]) > 0:
             time2 = str(timedelta(seconds=int(incons[3])))
-            res["2-"] = self.get_code(incons[2])+"("+time2+")"
+            self.inResearch[self.get_code(incons[2])] = time2
+
+        print(self.inResearch)
         return res
        
     def isUnderAttack(self,ogame,id):
