@@ -20,13 +20,13 @@ class Afficheur(Thread):
         self.info_log = []
         self.infoLog2 = []
         self.co_gal = 1
-        self.co_sys = 1 
+        self.co_sys = 1
+        self.ogame_infos = [""] 
 
     def initOgame(self):
         try:
             self.ogame = OGame('Aquarius', "nemesism@hotmail.fr", "pencilcho44")
             self.id_pl = self.ogame.get_planet_ids()
-            self.ogame_infos = [""]*len(self.id_pl)
             print("Connexion réussi")
         except:
             print("echec de connexion!re-tentative...")
