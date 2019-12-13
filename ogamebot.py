@@ -19,6 +19,8 @@ class Afficheur(Thread):
         self.i_o = i_ogame()
         self.info_log = []
         self.infoLog2 = []
+        self.co_gal = 1
+        self.co_sys = 1 
 
     def initOgame(self):
         try:
@@ -42,8 +44,6 @@ class Afficheur(Thread):
         """Code à exécuter pendant l'exécution du thread."""
         self.initOgame()      
         i = 0
-        self.co_gal = 1
-        self.co_sys = 1 
         while True:       
             if  self.isRunning == True:
                 try:
@@ -52,6 +52,7 @@ class Afficheur(Thread):
                     pl_info = self.ogame.get_planet_infos(id)
                     co = pl_info["coordinate"]
                     pos = str(co["galaxy"])+":"+str(co["system"])+":"+str(co["position"])
+                    #case = "["+pl_info["fields"]["built"]+"/"+pl_info["fields"]["total"]+"]"
                     research = self.ogame.get_research()
                     self.co_sys = self.co_sys+1
                     if self.co_sys >= 500:
@@ -65,7 +66,7 @@ class Afficheur(Thread):
                     content = self.f_o.launch(self.ogame,id)
                     self.fleets = self.f_o.fleets
                     global_res = self.ogame.get_resources(id)
-                    og_info = { "id_planet":pl_info['planet_name'] ,"position": pos,
+                    og_info = { "id_planet":pl_info['planet_name'] , "position": pos,
                     "resources":global_res.items(),
                      "content": content }
                     self.ogame_infos[i] = og_info
@@ -77,7 +78,7 @@ class Afficheur(Thread):
                     if i>0:
                         self.i_o.gestionAttack(self.ogame,id,self.co_gal,self.co_sys)
                         self.f_o.prints("Nombre d'inactif sur le système "
-                        +self.co_gal+":"+self.co_sys+":"+self.i_o.nbmessage)
+                        +str(self.co_gal)+":"+str(self.co_sys)+" ==> "+str(self.i_o.nbmessage))
                     
                     self.isConnected = True
                     self.info_log = self.f_o.info_log

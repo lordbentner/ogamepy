@@ -33,7 +33,8 @@ def hello():
 
 @app.route('/refresh/')
 def refresh():
-    info = [ thread_1.isConnected,thread_1.isRunning, thread_1.f_o.inResearch.items()]
+    info = [ thread_1.isConnected,thread_1.isRunning, thread_1.f_o.inResearch.items() ,
+            thread_1.co_gal,thread_1.co_sys, thread_1.i_o.nbmessage]
     return render_template('index.html',ogame=thread_1.ogame_infos,
     research=thread_1.lvl_research,info=info)
 
